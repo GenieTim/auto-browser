@@ -4,6 +4,8 @@ const fs = require('fs')
 const path = require('path')
 const {cli} = require('cli-ux')
 const extractHostname = require('../utils/extract-hostname')
+const instructions = require('../instructions')
+const crypto = require('crypto')
 
 class GenerateCommand extends Command {
   async run() {
@@ -11,11 +13,11 @@ class GenerateCommand extends Command {
     const {flags} = this.parse(GenerateCommand)
 
     // setup local vars
-    this.instructionChoices = {
-      goto: 'Open an URL',
-      fill: 'Fill in a form field',
-      click: 'Click on something',
-    }
+    this.instructionChoices = {}
+
+    instructions.forEach(instruction => {
+      this.instructionChoices[instruction.identifier] = instruction.description
+    })
 
     // start asking
     let site = {}
@@ -35,13 +37,25 @@ class GenerateCommand extends Command {
       end: 'end',
     })
 
-    let target = path.join(__dirname, '../commands', extractHostname(url) + '.json')
+    let target = path.join(__dirname, '../../webpages', extractHostname(url) + '.json')
+    // just to be sure not to end in an endless loop in worst case
+    // I hope there will never even a second attempt be necessary
+    let attempts = 0
+    while (fs.existsSync(target) && attempts < 10) {
+      target = path.join(__dirname, '../../webpages', extractHostname(url) + '-' + crypto.randomBytes(10).toString('hex') + '.json')
+      attempts += 1
+    }
     fs.writeFileSync(target, JSON.stringify(site), 'utf8')
     if (flags.debug) {
       this.log(`Wrote file ${target}`)
     }
   }
 
+  /**
+   * Request an instruction from the user
+   *
+   * @return {object} the instruction object
+   */
   async getInstruction() {
     let answers = await inquirer.prompt([{
       type: 'list',
@@ -55,33 +69,12 @@ class GenerateCommand extends Command {
     }])
     let instructionChoice = answers.instruction
     let instruction = {}
-    switch (instructionChoice) {
-    case 'goto':
-      instruction[instructionChoice] = await cli.prompt('Where would you like to go?')
-      break
-    case 'click':
-      instruction[instructionChoice] = await cli.prompt('What is the selector of what to click?')
-      break
-    case 'fill':
-      instruction[instructionChoice] = await this.askForFormFields()
-      break
-    default:
+    if (Object.prototype.hasOwnProperty.call(instructions, instructionChoice)) {
+      instruction = instructions[instructionChoice].createInteractively()
+    } else {
       this.warn('Not yet handled instructionChoice: ' + instructionChoice)
     }
     return instruction
-  }
-
-  async askForFormFields() {
-    let fields = []
-    let addNew = true
-    while (addNew) {
-      let field = {}
-      let selector = await cli.prompt('What is the field\'s selector?')
-      let text = await cli.prompt('What should be filled in?')
-      field[selector] = text
-      fields.push(field)
-      addNew = await cli.confirm('Add another field?')
-    }
   }
 }
 

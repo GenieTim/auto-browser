@@ -50,3 +50,5 @@ typings/
 yarn-debug.log*
 yarn-error.log*
 webpages/*.json
+
+user_data
