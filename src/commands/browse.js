@@ -9,7 +9,14 @@ const executeFunctionByName = require('../utils/execute-function-by-name')
 const instructions = require('../instructions')
 
 // find all available pages
-const availablePages = glob.sync(path.join(__dirname, '../../webpages/*.json'))
+const sourceDir = path.join(__dirname, '../../webpages')
+let availableFiles = glob.sync(path.join(sourceDir, '*.json'), {
+  nodir: true,
+})
+let availablePages = []
+availableFiles.forEach(file => {
+  availablePages.push(path.basename(file))
+})
 
 class BrowseCommand extends Command {
   async run() {
@@ -35,18 +42,19 @@ class BrowseCommand extends Command {
       }
       await sandman.randomSleep(1000)
     })
+    this.exit()
   }
 
   /**
    * Set up the browser
    */
   async initializeBrowser() {
-    const browser = await puppeteer.launch({
+    this.browser = await puppeteer.launch({
       headless: !this.debug,
       userDataDir: './user_data',
     })
     try {
-      this.driver = await browser.newPage()
+      this.driver = await this.browser.newPage()
     } catch (error) {
       this.logger.error(error)
       return
@@ -61,6 +69,15 @@ class BrowseCommand extends Command {
    */
   async destroy() {
     await this.driver.close()
+  }
+
+  /**
+   * Restart the browser instance/session.
+   * Don't know yet – restarting page is most stable.
+   */
+  async restart() {
+    await this.driver.close()
+    await this.browser.newPage()
   }
 
   /**
@@ -84,7 +101,10 @@ class BrowseCommand extends Command {
     let commands = Object.keys(instruction)
     asyncForEach(commands, async command => {
       if (Object.prototype.hasOwnProperty.call(instructions, command)) {
-        instructions[command].follow(instruction[command], this.driver, this.instructionContext)
+        let instructor = new instructions[command]()
+        await instructor.follow(instruction[command], this.driver, this.instructionContext)
+      } else if (command === 'end') {
+        await this.restart()
       } else {
         // instruction not found – delegate it to the driver :?
         // applies to click, goto, ... and some security dangerousities

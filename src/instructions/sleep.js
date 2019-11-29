@@ -14,7 +14,11 @@ class SleepInstruction {
    */
   async follow(instruction, _, context) {
     await sandman.sleep(instruction)
-    context.timeWastedSleeping += instruction
+    if (Object.prototype.hasOwnProperty.call(context, 'timeWastedSleeping')) {
+      context.timeWastedSleeping += instruction
+    } else {
+      context.timeWastedSleeping = instruction
+    }
   }
 
   /**

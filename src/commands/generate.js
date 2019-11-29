@@ -15,9 +15,12 @@ class GenerateCommand extends Command {
     // setup local vars
     this.instructionChoices = {}
 
-    instructions.forEach(instruction => {
-      this.instructionChoices[instruction.identifier] = instruction.description
-    })
+    for (let instructionKey in instructions) {
+      if (Object.prototype.hasOwnProperty.call(instructions, instructionKey)) {
+        let instruction = instructions[instructionKey]
+        this.instructionChoices[instruction.identifier] = instruction.description
+      }
+    }
 
     // start asking
     let site = {}
@@ -33,9 +36,10 @@ class GenerateCommand extends Command {
       addNew = await cli.confirm('Add another instruction?')
     }
 
-    site.instructions.push({
-      end: 'end',
-    })
+    // Do we want to end the session after each
+    // site.instructions.push({
+    //   end: 'end',
+    // })
 
     let target = path.join(__dirname, '../../webpages', extractHostname(url) + '.json')
     // just to be sure not to end in an endless loop in worst case
@@ -70,7 +74,9 @@ class GenerateCommand extends Command {
     let instructionChoice = answers.instruction
     let instruction = {}
     if (Object.prototype.hasOwnProperty.call(instructions, instructionChoice)) {
-      instruction = instructions[instructionChoice].createInteractively()
+      let instructor = new instructions[instructionChoice]()
+      instruction = {}
+      instruction[instructionChoice] = await instructor.createInteractively()
     } else {
       this.warn('Not yet handled instructionChoice: ' + instructionChoice)
     }

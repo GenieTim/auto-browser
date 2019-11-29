@@ -13,7 +13,7 @@ var normalizedPath = __dirname
 fs.readdirSync(normalizedPath).forEach(file => {
   if (!exceptions.includes(file)) {
     let Instruction = require('./' + file)
-    instructions[Instruction.identifier] = new Instruction()
+    instructions[Instruction.identifier] = Instruction
   }
 })
 
