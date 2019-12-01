@@ -1,4 +1,4 @@
-const { cli } = require('cli-ux')
+const {cli} = require('cli-ux')
 const inquirer = require('inquirer')
 const sandman = require('../utils/sandman')
 

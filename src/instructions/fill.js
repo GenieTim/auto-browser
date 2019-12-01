@@ -1,4 +1,4 @@
-const { cli } = require('cli-ux')
+const {cli} = require('cli-ux')
 const asyncForEach = require('../utils/async-foreach')
 
 /**

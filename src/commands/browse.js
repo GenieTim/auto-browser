@@ -1,4 +1,4 @@
-const { Command, flags } = require('@oclif/command')
+const {Command, flags} = require('@oclif/command')
 const fs = require('fs')
 const path = require('path')
 const glob = require('glob')
@@ -20,7 +20,7 @@ availableFiles.forEach(file => {
 
 class BrowseCommand extends Command {
   async run() {
-    const { argv, flags } = this.parse(BrowseCommand)
+    const {argv, flags} = this.parse(BrowseCommand)
     this.debug = flags.debug
 
     let files = argv
@@ -62,7 +62,7 @@ class BrowseCommand extends Command {
       return
     }
     if (this.debug) {
-      this.driver.setViewport({ width: 0, height: 0 })
+      this.driver.setViewport({width: 0, height: 0})
     }
   }
 
@@ -135,7 +135,7 @@ BrowseCommand.args = [{
 }]
 
 BrowseCommand.flags = {
-  debug: flags.boolean({ char: 'd', description: 'debug: get additional logs, show browser', default: false }),
+  debug: flags.boolean({char: 'd', description: 'debug: get additional logs, show browser', default: false}),
 }
 
 module.exports = BrowseCommand
