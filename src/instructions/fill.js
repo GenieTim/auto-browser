@@ -1,4 +1,4 @@
-const {cli} = require('cli-ux')
+const { cli } = require('cli-ux')
 const asyncForEach = require('../utils/async-foreach')
 
 /**
@@ -48,7 +48,12 @@ class FillInstruction {
       // loop selectors
       await asyncForEach(fieldSelectors, async selector => {
         // select each field & type what is recommended
-        await driver.type(selector, field[fieldSelectors])
+        if (selector.startsWith('select')) {
+          // rudimentary check to act differently on <select><option>...
+          await driver.select(selector, field[fieldSelectors])
+        } else {
+          await driver.type(selector, field[fieldSelectors])
+        }
       })
     })
   }

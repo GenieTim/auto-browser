@@ -1,4 +1,4 @@
-const {Command, flags} = require('@oclif/command')
+const { Command, flags } = require('@oclif/command')
 const fs = require('fs')
 const path = require('path')
 const glob = require('glob')
@@ -20,14 +20,16 @@ availableFiles.forEach(file => {
 
 class BrowseCommand extends Command {
   async run() {
-    const {argv, flags} = this.parse(BrowseCommand)
+    const { argv, flags } = this.parse(BrowseCommand)
     this.debug = flags.debug
 
     let files = argv
     if (files.length === 0) {
       files = availablePages
     }
-    this.instructionContext = {}
+    this.instructionContext = {
+      logger: this,
+    }
     await this.initializeBrowser()
     await sandman.sleep(5000)
     await asyncForEach(files, async page => {
@@ -60,7 +62,7 @@ class BrowseCommand extends Command {
       return
     }
     if (this.debug) {
-      this.driver.setViewport({width: 0, height: 0})
+      this.driver.setViewport({ width: 0, height: 0 })
     }
   }
 
@@ -87,6 +89,7 @@ class BrowseCommand extends Command {
    */
   async runPage(filename) {
     let instructions = JSON.parse(fs.readFileSync(path.join(__dirname, '../../webpages', filename), 'utf8'))
+    this.log('Running page "' + instructions.name + '"...')
     await asyncForEach(instructions.instructions, async instruction => {
       await this.runInstruction(instruction)
     })
@@ -132,7 +135,7 @@ BrowseCommand.args = [{
 }]
 
 BrowseCommand.flags = {
-  debug: flags.boolean({char: 'd', description: 'debug: get additional logs, show browser', default: false}),
+  debug: flags.boolean({ char: 'd', description: 'debug: get additional logs, show browser', default: false }),
 }
 
 module.exports = BrowseCommand
