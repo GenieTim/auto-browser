@@ -7,14 +7,23 @@ const sandman = require('../utils/sandman')
  */
 class UserWaitInstruction {
   /**
+   * Instantiate this class
+   *
+   * @param {Object} logger an instance of a class with methods: log, warn, error
+   */
+  constructor(logger) {
+    this.logger = logger
+  }
+
+  /**
    * Run/Execute/Follow this instruction
    *
    * @param {object} instruction the instructions, as created by createInteractively()
    * @param {module.puppeteer.Browser} driver the browser to execute upon
-   * @param {object} context an object to populate/read from to exchange data between instructions
+   * @param {object} _ an object to populate/read from to exchange data between instructions
    */
-  async follow(instruction, driver, context) {
-    context.logger.log('Waiting for user input!')
+  async follow(instruction, driver, _) {
+    this.logger.log('Waiting for user input!')
     if (instruction.end === 'Navigation') {
       await driver.waitForNavigation({
         timeout: 600000, // 10 min
@@ -22,7 +31,7 @@ class UserWaitInstruction {
     } else if (instruction.end === 'CI-Enter') {
       await cli.confirm('User input finished?')
     } else {
-      context.logger.warn('Unrecognized user input waiter. Waiting a generic minute...')
+      this.logger.warn('Unrecognized user input waiter. Waiting a generic minute...')
       await sandman.sleep(60000)
     }
   }

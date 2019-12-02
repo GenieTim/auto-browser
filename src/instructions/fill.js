@@ -13,7 +13,11 @@ class FillInstruction {
    * @param {object} _ an object to populate/read from to exchange data between instructions
    */
   async follow(instruction, driver, _) {
-    await this.fillFields(instruction, driver)
+    try {
+      await this.fillFields(instruction, driver)
+    } catch (error) {
+      throw error
+    }
   }
 
   /**

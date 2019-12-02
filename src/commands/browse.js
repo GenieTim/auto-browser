@@ -7,6 +7,7 @@ const puppeteer = require('puppeteer')
 const sandman = require('../utils/sandman')
 const executeFunctionByName = require('../utils/execute-function-by-name')
 const instructions = require('../instructions')
+const {cli} = require('cli-ux')
 
 // find all available pages
 const sourceDir = path.join(__dirname, '../../webpages')
@@ -27,24 +28,31 @@ class BrowseCommand extends Command {
     if (files.length === 0) {
       files = availablePages
     }
-    this.instructionContext = {
-      logger: this,
-    }
+    this.instructionContext = {}
     await this.initializeBrowser()
     await sandman.sleep(5000)
+    this.errorCount = 0
     await asyncForEach(files, async page => {
       try {
         await this.runPage(page)
       } catch (error) {
+        this.errorCount++
         // catch errors top-level to cancel pages on error
-        this.warn('Failed to process page: ' + page + '. Error: ' + error)
-        // await this.destroy()
-        // await this.initializeBrowser()
-        // this.instructionContext = {}
+        this.warn('Failed to process page: ' + page + '. Will keep open. Error: ' + error)
+        this.driver = await this.browser.newPage()
       }
       await sandman.randomSleep(1000)
+      // additional debug measure: let user decide to go on
+      if (flags.confirmNext) {
+        let goOn = false
+        while (!goOn) {
+          goOn = await cli.confirm('Ready to go to next page?')
+        }
+      }
     })
-    this.exit()
+    if (this.errorCount <= 0) {
+      this.exit()
+    }
   }
 
   /**
@@ -79,7 +87,7 @@ class BrowseCommand extends Command {
    */
   async restart() {
     await this.driver.close()
-    await this.browser.newPage()
+    this.driver = await this.browser.newPage()
   }
 
   /**
@@ -102,10 +110,14 @@ class BrowseCommand extends Command {
    */
   async runInstruction(instruction) {
     let commands = Object.keys(instruction)
-    asyncForEach(commands, async command => {
+    await asyncForEach(commands, async command => {
       if (Object.prototype.hasOwnProperty.call(instructions, command)) {
-        let instructor = new instructions[command]()
-        await instructor.follow(instruction[command], this.driver, this.instructionContext)
+        let instructor = new instructions[command](this)
+        try {
+          await instructor.follow(instruction[command], this.driver, this.instructionContext)
+        } catch (error) {
+          throw error
+        }
       } else if (command === 'end') {
         await this.restart()
       } else {
@@ -136,6 +148,7 @@ BrowseCommand.args = [{
 
 BrowseCommand.flags = {
   debug: flags.boolean({char: 'd', description: 'debug: get additional logs, show browser', default: false}),
+  confirmNext: flags.boolean({char: 'c', description: 'confirm next: require user (CI) interaction before moving to next page', default: false}),
 }
 
 module.exports = BrowseCommand

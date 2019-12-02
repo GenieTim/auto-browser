@@ -19,7 +19,7 @@ $ npm install -g auto-browser
 $ auto-browser COMMAND
 running command...
 $ auto-browser (-v|--version|version)
-auto-browser/0.0.0 darwin-x64 node-v13.1.0
+auto-browser/0.0.0 darwin-x64 node-v13.2.0
 $ auto-browser --help [COMMAND]
 USAGE
   $ auto-browser COMMAND
@@ -42,11 +42,15 @@ USAGE
   $ auto-browser browse [WEBPAGE]
 
 ARGUMENTS
-  WEBPAGE  (/Users/timbernhard/Privat/Programming/OpenSource-Contributions/auto-browser/webpages/.gitkeep|/Users/timbern
-           hard/Privat/Programming/OpenSource-Contributions/auto-browser/webpages/facebook.com.json) The page to browse
+  WEBPAGE  (26245.online-adventskalender.de.json|cakescookiesandmore.ch.json|frzadvent.ch.json|hiltl.ch.json|interaktiv.
+           contilla.de-2.json|interaktiv.contilla.de.json|wphive.com.json|www.casio-europe.com.json|www.coopzeitung.ch.j
+           son|www.ekz.ch.json|www.fairtrade-advent.org.json|www.games.ch.json|www.geschenkidee.ch.json|www.sbb.ch.json|
+           www.surprize.ch.json|xmas.bauundhobby.ch.json|xmas.toppreise.ch.json|zattoo-adventskalender.com.json) The
+           page to browse
 
 OPTIONS
-  -d, --debug=true|false  debug: get additional logs, show browser
+  -c, --confirmNext  confirm next: require user (CI) interaction before moving to next page
+  -d, --debug        debug: get additional logs, show browser
 
 DESCRIPTION
   ...

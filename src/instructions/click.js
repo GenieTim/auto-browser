@@ -1,4 +1,5 @@
 const {cli} = require('cli-ux')
+const asyncForEach = require('../utils/async-foreach')
 
 /**
  * The click selector in browser
@@ -12,7 +13,10 @@ class ClickInstruction {
    * @param {object} _ an object to populate/read from to exchange data between instructions
    */
   async follow(instruction, driver, _) {
-    await driver.click(instruction)
+    if (instruction instanceof Object) {
+      return this.clickMultiple(instruction, driver)
+    }
+    return this.clickOne(instruction, driver)
   }
 
   /**
@@ -20,6 +24,49 @@ class ClickInstruction {
    */
   async createInteractively() {
     return cli.prompt('What is the selector of what to click?')
+  }
+
+  /**
+   * Click elements in case of a
+   *
+   * @param {object} instruction more detailed instruction
+   * @param {module.puppeteer.Browser} driver the page to click in
+   */
+  async clickMultiple(instruction, driver) {
+    let elements = await driver.$$(instruction.selector)
+    switch (instruction.multiple) {
+    case 'last':
+      await elements[elements.length - 1].click()
+      break
+    case 'first':
+      await elements[0].click()
+      break
+    case 'all':
+      await asyncForEach(elements, async element => {
+        await element.click()
+      })
+    }
+  }
+
+  /**
+   * Click only one element
+   *
+   * @param {string} selector the DOM selector
+   * @param {module.puppeteer.Browser} driver the browser page to execute upon
+   */
+  async clickOne(selector, driver) {
+    try {
+      await driver.click(selector)
+    } catch (error) {
+      try {
+        await driver.evaluate(selector => {
+          // eslint-disable-next-line no-undef
+          return Promise.resolve(document.querySelector(selector).click())
+        }, selector)
+      } catch (error) {
+        throw error
+      }
+    }
   }
 }
 
