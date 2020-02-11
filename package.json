@@ -1,7 +1,7 @@
 {
   "name": "auto-browser",
   "description": "Light abstraction onto puppeteer in order to simplify easy browser automation task",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "Tim Bernhard @GenieTim",
   "bin": {
     "auto-browser": "./bin/run"

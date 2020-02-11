@@ -22,7 +22,7 @@ $ npm install -g auto-browser
 $ auto-browser COMMAND
 running command...
 $ auto-browser (-v|--version|version)
-auto-browser/0.0.0 darwin-x64 node-v13.2.0
+auto-browser/1.0.0 darwin-x64 node-v13.8.0
 $ auto-browser --help [COMMAND]
 USAGE
   $ auto-browser COMMAND
@@ -45,18 +45,24 @@ USAGE
   $ auto-browser browse [WEBPAGE]
 
 ARGUMENTS
-  WEBPAGE  (pages created by `auto-browser generate`) The
-           page to browse
+  WEBPAGE
+      (26245.online-adventskalender.de.json|adventcalendar.myswitzerland.com.json|adventskalender.ifolor.ch.json|blog.hote
+      lplan.ch.json|frzadvent.ch.json|interaktiv.contilla.de-2.json|interaktiv.contilla.de.json|kristallwelten.swarovski.c
+      om.json|unserfbgewinnspiel.fanpage-apps.de.json|www.casio-europe.com.json|www.christ-swiss.ch.json|www.conforama.ch.
+      json|www.coopzeitung.ch.json|www.eat.ch.json|www.ekz.ch.json|www.fairtrade-advent.org.json|www.friday-magazine.ch.js
+      on|www.games.ch.json|www.geschenkidee.ch.json|www.houseofbeer.ch.json|www.nintendo.de.json|www.playstation.com.json|
+      www.sbb.ch.json|www.surprize.ch.json|www.tonhalle-orchester.ch.json|xmas.bauundhobby.ch.json|xmas.toppreise.ch.json|
+      zattoo-adventskalender.com.json) The page to browse
 
 OPTIONS
   -c, --confirmNext  confirm next: require user (CI) interaction before moving to next page
-  -d, --debug        debug: get additional logs, show browser
+  -d, --debug        debug: get additional logs, show browser (disable headless)
 
 DESCRIPTION
   ...
 ```
 
-_See code: [src/commands/browse.js](https://github.com/GenieTim/auto-browser/blob/v0.0.0/src/commands/browse.js)_
+_See code: [src/commands/browse.js](https://github.com/GenieTim/auto-browser/blob/v1.0.0/src/commands/browse.js)_
 
 ## `auto-browser generate`
 
@@ -73,7 +79,7 @@ DESCRIPTION
   ...
 ```
 
-_See code: [src/commands/generate.js](https://github.com/GenieTim/auto-browser/blob/v0.0.0/src/commands/generate.js)_
+_See code: [src/commands/generate.js](https://github.com/GenieTim/auto-browser/blob/v1.0.0/src/commands/generate.js)_
 
 ## `auto-browser help [COMMAND]`
 
@@ -113,5 +119,5 @@ DESCRIPTION
   ...
 ```
 
-_See code: [src/commands/list.js](https://github.com/GenieTim/auto-browser/blob/v0.0.0/src/commands/list.js)_
+_See code: [src/commands/list.js](https://github.com/GenieTim/auto-browser/blob/v1.0.0/src/commands/list.js)_
 <!-- commandsstop -->
