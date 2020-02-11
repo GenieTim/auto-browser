@@ -1,7 +1,7 @@
 {
   "name": "auto-browser",
   "description": "Light abstraction onto puppeteer in order to simplify easy browser automation task",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Tim Bernhard @GenieTim",
   "bin": {
     "auto-browser": "./bin/run"
@@ -33,7 +33,9 @@
   ],
   "homepage": "https://github.com/GenieTim/auto-browser",
   "keywords": [
-    "automation", "browser", "puppeteer"
+    "automation",
+    "browser",
+    "puppeteer"
   ],
   "license": "GPL-3.0-or-later",
   "main": "src/index.js",

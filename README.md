@@ -22,7 +22,7 @@ $ npm install -g auto-browser
 $ auto-browser COMMAND
 running command...
 $ auto-browser (-v|--version|version)
-auto-browser/1.0.0 darwin-x64 node-v13.8.0
+auto-browser/1.0.1 darwin-x64 node-v13.8.0
 $ auto-browser --help [COMMAND]
 USAGE
   $ auto-browser COMMAND
@@ -55,7 +55,7 @@ DESCRIPTION
   ...
 ```
 
-_See code: [src/commands/browse.js](https://github.com/GenieTim/auto-browser/blob/v1.0.0/src/commands/browse.js)_
+_See code: [src/commands/browse.js](https://github.com/GenieTim/auto-browser/blob/v1.0.1/src/commands/browse.js)_
 
 ## `auto-browser generate`
 
@@ -72,7 +72,7 @@ DESCRIPTION
   ...
 ```
 
-_See code: [src/commands/generate.js](https://github.com/GenieTim/auto-browser/blob/v1.0.0/src/commands/generate.js)_
+_See code: [src/commands/generate.js](https://github.com/GenieTim/auto-browser/blob/v1.0.1/src/commands/generate.js)_
 
 ## `auto-browser help [COMMAND]`
 
@@ -112,5 +112,5 @@ DESCRIPTION
   ...
 ```
 
-_See code: [src/commands/list.js](https://github.com/GenieTim/auto-browser/blob/v1.0.0/src/commands/list.js)_
+_See code: [src/commands/list.js](https://github.com/GenieTim/auto-browser/blob/v1.0.1/src/commands/list.js)_
 <!-- commandsstop -->
