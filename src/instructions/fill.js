@@ -6,6 +6,15 @@ const asyncForEach = require('../utils/async-foreach')
  */
 class FillInstruction {
   /**
+   * Instantiate this class
+   *
+   * @param {Object} logger an instance of a class with methods: log, warn, error
+   */
+  constructor(logger) {
+    this.logger = logger
+  }
+
+  /**
    * Run/Execute/Follow this instruction
    *
    * @param {object} instruction the instructions, as created by createInteractively()
@@ -51,15 +60,39 @@ class FillInstruction {
       let fieldSelectors = Object.keys(field)
       // loop selectors
       await asyncForEach(fieldSelectors, async selector => {
+        selector = this.adjustSelector(selector)
         // select each field & type what is recommended
         if (selector.startsWith('select')) {
           // rudimentary check to act differently on <select><option>...
           await driver.select(selector, field[fieldSelectors])
         } else {
+          // first, clear form field
+          await driver.evaluate(selector => {
+            // eslint-disable-next-line no-undef
+            document.querySelector(selector).value = ''
+          }, selector)
+          // then, type value
           await driver.type(selector, field[fieldSelectors])
         }
       })
     })
+  }
+
+  /**
+   * Hacky temporary adjustment for some ideas
+   *
+   * @todo outsource to its own instructionset
+   * @param {string} selector the selector to adjust
+   * @returns {string} the adjusted string/selector
+   */
+  adjustSelector(selector) {
+    try {
+      let today = new Date()
+      selector = selector.replace('$today', today.getDate())
+    } catch (error) {
+      this.logger.error(error)
+    }
+    return selector
   }
 }
 

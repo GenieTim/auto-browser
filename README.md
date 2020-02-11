@@ -1,7 +1,7 @@
 auto-browser
 ============
 
-Light abstraction onto puppeteer in order to simplify easy browser automation task
+Light abstraction onto puppeteer in order to simplify easy browser automation tasks.
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/auto-browser.svg)](https://npmjs.org/package/auto-browser)
@@ -13,6 +13,9 @@ Light abstraction onto puppeteer in order to simplify easy browser automation ta
 * [Commands](#commands)
 <!-- tocstop -->
 # Usage
+Example usage includes automatic participation in christmas/advent competitions 
+so you do not have to do it manually, 24 times.
+
 <!-- usage -->
 ```sh-session
 $ npm install -g auto-browser
@@ -42,10 +45,7 @@ USAGE
   $ auto-browser browse [WEBPAGE]
 
 ARGUMENTS
-  WEBPAGE  (26245.online-adventskalender.de.json|cakescookiesandmore.ch.json|frzadvent.ch.json|hiltl.ch.json|interaktiv.
-           contilla.de-2.json|interaktiv.contilla.de.json|wphive.com.json|www.casio-europe.com.json|www.coopzeitung.ch.j
-           son|www.ekz.ch.json|www.fairtrade-advent.org.json|www.games.ch.json|www.geschenkidee.ch.json|www.sbb.ch.json|
-           www.surprize.ch.json|xmas.bauundhobby.ch.json|xmas.toppreise.ch.json|zattoo-adventskalender.com.json) The
+  WEBPAGE  (pages created by `auto-browser generate`) The
            page to browse
 
 OPTIONS

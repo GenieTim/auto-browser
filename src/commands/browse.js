@@ -38,8 +38,7 @@ class BrowseCommand extends Command {
       } catch (error) {
         this.errorCount++
         // catch errors top-level to cancel pages on error
-        this.warn('Failed to process page: ' + page + '. Will keep open. Error: ' + error)
-        this.driver = await this.browser.newPage()
+        this.warn('Failed to process page: ' + page + '. Error: ' + error)
       }
       await sandman.randomSleep(1000)
       // additional debug measure: let user decide to go on
@@ -63,6 +62,13 @@ class BrowseCommand extends Command {
       headless: !this.debug,
       userDataDir: './user_data',
     })
+    await this.openNewPage()
+  }
+
+  /**
+   * Open a new page/tab
+   */
+  async openNewPage() {
     try {
       this.driver = await this.browser.newPage()
     } catch (error) {
@@ -109,6 +115,7 @@ class BrowseCommand extends Command {
    * @param {object} instruction the instructions, what to do in the browser
    */
   async runInstruction(instruction) {
+    let pageCount = (await this.browser.pages()).length
     let commands = Object.keys(instruction)
     await asyncForEach(commands, async command => {
       if (Object.prototype.hasOwnProperty.call(instructions, command)) {
@@ -127,6 +134,12 @@ class BrowseCommand extends Command {
       }
     })
     await sandman.randomSleep(2500)
+    // switch to new page if a new one was opened.
+    // assuming no tab juggling happens (as no corresponding instruction yet)
+    let newPages = await this.browser.pages
+    if (pageCount < (newPages).length) {
+      this.driver = newPages[newPages.length - 1]
+    }
   }
 }
 
@@ -147,7 +160,7 @@ BrowseCommand.args = [{
 }]
 
 BrowseCommand.flags = {
-  debug: flags.boolean({char: 'd', description: 'debug: get additional logs, show browser', default: false}),
+  debug: flags.boolean({char: 'd', description: 'debug: get additional logs, show browser (disable headless)', default: false}),
   confirmNext: flags.boolean({char: 'c', description: 'confirm next: require user (CI) interaction before moving to next page', default: false}),
 }
 

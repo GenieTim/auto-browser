@@ -6,6 +6,15 @@ const asyncForEach = require('../utils/async-foreach')
  */
 class ClickInstruction {
   /**
+   * Instantiate this class
+   *
+   * @param {Object} logger an instance of a class with methods: log, warn, error
+   */
+  constructor(logger) {
+    this.logger = logger
+  }
+
+  /**
    * Run/Execute/Follow this instruction
    *
    * @param {object} instruction the instructions, as created by createInteractively()
@@ -55,8 +64,14 @@ class ClickInstruction {
    * @param {module.puppeteer.Browser} driver the browser page to execute upon
    */
   async clickOne(selector, driver) {
+    selector = this.adjustSelector(selector)
     try {
-      await driver.click(selector)
+      let element = driver.$(selector)
+      // prevent all possible tab juggling until there are appropriate instructions
+      await driver.evaluateHandle(element => {
+        element.target = '_self'
+      })
+      await element.click()
     } catch (error) {
       try {
         await driver.evaluate(selector => {
@@ -67,6 +82,23 @@ class ClickInstruction {
         throw error
       }
     }
+  }
+
+  /**
+   * Hacky temporary adjustment for some ideas
+   *
+   * @todo outsource to its own instructionset
+   * @param {string} selector the selector to adjust
+   * @returns {string} the adjusted string/selector
+   */
+  adjustSelector(selector) {
+    try {
+      let today = new Date()
+      selector = selector.replace('$today', today.getDate())
+    } catch (error) {
+      this.logger.warn(error)
+    }
+    return selector
   }
 }
 
