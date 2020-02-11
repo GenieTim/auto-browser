@@ -45,14 +45,7 @@ USAGE
   $ auto-browser browse [WEBPAGE]
 
 ARGUMENTS
-  WEBPAGE
-      (26245.online-adventskalender.de.json|adventcalendar.myswitzerland.com.json|adventskalender.ifolor.ch.json|blog.hote
-      lplan.ch.json|frzadvent.ch.json|interaktiv.contilla.de-2.json|interaktiv.contilla.de.json|kristallwelten.swarovski.c
-      om.json|unserfbgewinnspiel.fanpage-apps.de.json|www.casio-europe.com.json|www.christ-swiss.ch.json|www.conforama.ch.
-      json|www.coopzeitung.ch.json|www.eat.ch.json|www.ekz.ch.json|www.fairtrade-advent.org.json|www.friday-magazine.ch.js
-      on|www.games.ch.json|www.geschenkidee.ch.json|www.houseofbeer.ch.json|www.nintendo.de.json|www.playstation.com.json|
-      www.sbb.ch.json|www.surprize.ch.json|www.tonhalle-orchester.ch.json|xmas.bauundhobby.ch.json|xmas.toppreise.ch.json|
-      zattoo-adventskalender.com.json) The page to browse
+  WEBPAGE  () The page to browse
 
 OPTIONS
   -c, --confirmNext  confirm next: require user (CI) interaction before moving to next page

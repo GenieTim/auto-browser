@@ -33,7 +33,7 @@
   ],
   "homepage": "https://github.com/GenieTim/auto-browser",
   "keywords": [
-    "oclif"
+    "automation", "browser", "puppeteer"
   ],
   "license": "GPL-3.0-or-later",
   "main": "src/index.js",
