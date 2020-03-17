@@ -73,14 +73,11 @@ class ClickInstruction {
       })
       await element.click()
     } catch (error) {
-      try {
-        await driver.evaluate(selector => {
-          // eslint-disable-next-line no-undef
-          return Promise.resolve(document.querySelector(selector).click())
-        }, selector)
-      } catch (error) {
-        throw error
-      }
+      // throws:
+      await driver.evaluate(selector => {
+        // eslint-disable-next-line no-undef
+        return Promise.resolve(document.querySelector(selector).click()).catch(e)
+      }, selector)
     }
   }
 

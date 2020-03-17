@@ -120,11 +120,8 @@ class BrowseCommand extends Command {
     await asyncForEach(commands, async command => {
       if (Object.prototype.hasOwnProperty.call(instructions, command)) {
         let instructor = new instructions[command](this)
-        try {
-          await instructor.follow(instruction[command], this.driver, this.instructionContext)
-        } catch (error) {
-          throw error
-        }
+        // throws:
+        await instructor.follow(instruction[command], this.driver, this.instructionContext)
       } else if (command === 'end') {
         await this.restart()
       } else {
