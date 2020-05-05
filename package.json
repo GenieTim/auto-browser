@@ -8,13 +8,13 @@
   },
   "bugs": "https://github.com/GenieTim/auto-browser/issues",
   "dependencies": {
-    "@oclif/command": "^1",
-    "@oclif/config": "^1.14.0",
-    "@oclif/plugin-help": "^2.2.3",
+    "@oclif/command": "^1.6.0",
+    "@oclif/config": "^1.15.1",
+    "@oclif/plugin-help": "^3.0.0",
     "cli-ux": "^5.4.5",
     "glob": "^7.1.6",
     "inquirer": "^7.1.0",
-    "puppeteer": "^2.1.1"
+    "puppeteer": "^3.0.2"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1",
