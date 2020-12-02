@@ -105,6 +105,7 @@ class BrowseCommand extends Command {
     let instructions = JSON.parse(fs.readFileSync(path.join(__dirname, '../../webpages', filename), 'utf8'))
     this.log('Running page "' + instructions.name + '"...')
     await asyncForEach(instructions.instructions, async instruction => {
+      // no try-catch here to have a page fail if something does not work
       await this.runInstruction(instruction)
     })
   }

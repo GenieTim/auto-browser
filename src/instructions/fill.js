@@ -1,4 +1,4 @@
-const {cli} = require('cli-ux')
+const { cli } = require('cli-ux')
 const asyncForEach = require('../utils/async-foreach')
 
 /**
@@ -64,10 +64,14 @@ class FillInstruction {
           await driver.select(selector, field[fieldSelectors])
         } else {
           // first, clear form field
-          await driver.evaluate(selector => {
-            // eslint-disable-next-line no-undef
-            document.querySelector(selector).value = ''
-          }, selector)
+          try {
+            await driver.evaluate(selector => {
+              // eslint-disable-next-line no-undef
+              document.querySelector(selector).value = ''
+            }, selector)
+          } catch (e) {
+            this.logger.warn("Failed to empty input with selector " + selector)
+          }
           // then, type value
           await driver.type(selector, field[fieldSelectors])
         }
