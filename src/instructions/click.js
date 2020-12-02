@@ -66,13 +66,24 @@ class ClickInstruction {
   async clickOne(selector, driver) {
     selector = this.adjustSelector(selector)
     try {
-      let element = driver.$(selector)
-      // prevent all possible tab juggling until there are appropriate instructions
-      await driver.evaluateHandle(element => {
-        element.target = '_self'
-      })
-      await element.click()
+      try {
+        // prevent all possible tab juggling until there are appropriate instructions
+        await driver.evaluate(selector => {
+          return new Promise((resolve, _) => {
+            // eslint-disable-next-line no-undef
+            const target = document.querySelector(selector)
+            if (target) {
+              target.target = '_self'
+            }
+            resolve()
+          }, selector)
+        })
+      } catch (error) {
+        this.logger.warn(error)
+      }
+      await driver.click(selector)
     } catch (error) {
+      this.logger.warn('Click failed on ' + selector + ', using fall-back js click. Error: ' + error)
       // throws:
       await driver.evaluate(selector => {
         // eslint-disable-next-line no-undef

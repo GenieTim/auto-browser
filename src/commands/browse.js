@@ -116,6 +116,9 @@ class BrowseCommand extends Command {
    * @param {object} instruction the instructions, what to do in the browser
    */
   async runInstruction(instruction) {
+    if (this.debug) {
+      this.log('Running instruction ' + JSON.stringify(instruction))
+    }
     let pageCount = (await this.browser.pages()).length
     let commands = Object.keys(instruction)
     await asyncForEach(commands, async command => {
