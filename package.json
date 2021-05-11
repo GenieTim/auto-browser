@@ -12,13 +12,13 @@
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.2",
     "cli-ux": "^5.5.1",
-    "glob": "^7.1.6",
+    "glob": "^7.1.7",
     "inquirer": "^8.0.0",
-    "puppeteer": "^8.0.0"
+    "puppeteer": "^9.1.1"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.0",
-    "eslint": "^7.24.0",
+    "eslint": "^7.26.0",
     "eslint-config-oclif": "^3.1",
     "globby": "^11.0.3"
   },
