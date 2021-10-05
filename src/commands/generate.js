@@ -49,6 +49,7 @@ class GenerateCommand extends Command {
       target = path.join(__dirname, '../../webpages', extractHostname(url) + '-' + crypto.randomBytes(10).toString('hex') + '.json')
       attempts += 1
     }
+
     fs.writeFileSync(target, JSON.stringify(site), 'utf8')
     if (flags.debug) {
       this.log(`Wrote file ${target}`)
@@ -80,6 +81,7 @@ class GenerateCommand extends Command {
     } else {
       this.warn('Not yet handled instructionChoice: ' + instructionChoice)
     }
+
     return instruction
   }
 }

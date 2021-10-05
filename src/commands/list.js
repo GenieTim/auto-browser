@@ -7,7 +7,7 @@ class ListCommand extends Command {
   async run() {
     const {flags} = this.parse(ListCommand)
     let localAvailablePages = []
-    fs.readdirSync(path.join(__dirname, '../../webpages')).forEach(file => {
+    for (const file of fs.readdirSync(path.join(__dirname, '../../webpages'))) {
       let filePath = path.join(__dirname, '../../webpages', file)
       let fileContent = fs.readFileSync(filePath, 'utf8')
       if (fileContent.length > 0) {
@@ -17,8 +17,9 @@ class ListCommand extends Command {
           try {
             url = webpage.instructions[0].goto
           } catch (error) {
-            this.warn(`File ${filePath} does not have a goto as first statement.`)
+            this.warn(`File ${filePath} does not have a goto as first statement. Error: ` + error)
           }
+
           localAvailablePages.push({
             file: file,
             name: webpage.name,
@@ -29,18 +30,14 @@ class ListCommand extends Command {
           this.warn("Failed listing file: '" + filePath + "', error: " + error)
         }
       }
-    })
+    }
 
     cli.table(localAvailablePages, {
       name: {
         minWidth: 7,
       },
-      page: {
-
-      },
-      file: {
-
-      },
+      page: {},
+      file: {},
       instructionCount: {
         header: 'Instruction Count',
         extended: true,

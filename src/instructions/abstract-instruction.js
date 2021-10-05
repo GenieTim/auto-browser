@@ -12,16 +12,12 @@ class AbstractInstruction {
    * @param {module.puppeteer.Browser} driver the browser to execute upon
    * @param {object} context an object to populate/read from to exchange data between instructions
    */
-  async follow(instruction, driver, context) {
-
-  }
+  async follow(instruction, driver, context) {}
 
   /**
    * Create this instruction by requesting data from the user via CI
    */
-  async createInteractively() {
-
-  }
+  async createInteractively() {}
 }
 
 AbstractInstruction.identifier = 'abstract'

@@ -40,6 +40,7 @@ class FillInstruction {
       fields.push(field)
       addNew = await cli.confirm('Add another field?')
     }
+
     return fields
   }
 
@@ -72,6 +73,7 @@ class FillInstruction {
           } catch (error) {
             this.logger.warn('Failed to empty input with selector ' + selector + '. Error: ' + error)
           }
+
           // then, type value
           await driver.type(selector, field[fieldSelectors])
         }
@@ -93,6 +95,7 @@ class FillInstruction {
     } catch (error) {
       this.logger.error(error)
     }
+
     return selector
   }
 }

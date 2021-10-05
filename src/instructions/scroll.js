@@ -17,6 +17,7 @@ class ScrollInstruction {
     if (this.extractProperty(instruction, 'bottom', false)) {
       await this.scrollToBottom(instruction)
     }
+
     if (this.extractProperty(instruction, 'selector', false)) {
       await this.scrollTo(instruction.selector)
     }
@@ -40,6 +41,7 @@ class ScrollInstruction {
         selector: await cli.prompt('What is the selector of where to scroll?'),
       }
     }
+
     return {bottom: true}
   }
 

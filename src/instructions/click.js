@@ -25,6 +25,7 @@ class ClickInstruction {
     if (instruction instanceof Object) {
       return this.clickMultiple(instruction, driver)
     }
+
     return this.clickOne(instruction, driver)
   }
 
@@ -75,12 +76,14 @@ class ClickInstruction {
             if (target) {
               target.target = '_self'
             }
+
             resolve()
           }, selector)
         })
       } catch (error) {
         this.logger.warn(error)
       }
+
       await driver.click(selector)
     } catch (error) {
       this.logger.warn('Click failed on ' + selector + ', using fall-back js click. Error: ' + error)
@@ -106,6 +109,7 @@ class ClickInstruction {
     } catch (error) {
       this.logger.warn(error)
     }
+
     return selector
   }
 }

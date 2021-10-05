@@ -15,9 +15,9 @@ let availableFiles = glob.sync(path.join(sourceDir, '*.json'), {
   nodir: true,
 })
 let availablePages = []
-availableFiles.forEach(file => {
+for (const file of availableFiles) {
   availablePages.push(path.basename(file))
-})
+}
 
 class BrowseCommand extends Command {
   async run() {
@@ -28,6 +28,7 @@ class BrowseCommand extends Command {
     if (files.length === 0) {
       files = availablePages
     }
+
     this.instructionContext = {}
     await this.initializeBrowser()
     await sandman.sleep(5000)
@@ -40,6 +41,7 @@ class BrowseCommand extends Command {
         // catch errors top-level to cancel pages on error
         this.warn('Failed to process page: ' + page + '. Error: ' + error)
       }
+
       await sandman.randomSleep(1000)
       // additional debug measure: let user decide to go on
       if (flags.confirmNext) {
@@ -75,6 +77,7 @@ class BrowseCommand extends Command {
       this.logger.error(error)
       return
     }
+
     if (this.debug) {
       this.driver.setViewport({width: 0, height: 0})
     }
@@ -119,6 +122,7 @@ class BrowseCommand extends Command {
     if (this.debug) {
       this.log('Running instruction ' + JSON.stringify(instruction))
     }
+
     let pageCount = (await this.browser.pages()).length
     let commands = Object.keys(instruction)
     await asyncForEach(commands, async command => {

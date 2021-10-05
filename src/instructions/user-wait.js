@@ -26,13 +26,13 @@ class UserWaitInstruction {
     this.logger.log('Waiting for user input!')
     if (instruction.end === 'Navigation') {
       await driver.waitForNavigation({
-        timeout: 600000, // 10 min
+        timeout: 600_000, // 10 min
       })
     } else if (instruction.end === 'CI-Enter') {
       await cli.confirm('User input finished?')
     } else {
       this.logger.warn('Unrecognized user input waiter. Waiting a generic minute...')
-      await sandman.sleep(60000)
+      await sandman.sleep(60_000)
     }
   }
 

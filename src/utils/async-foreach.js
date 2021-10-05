@@ -3,4 +3,5 @@ async function asyncForEach(array, callback) {
     await callback(array[index], index, array)
   }
 }
+
 module.exports = asyncForEach
