@@ -20,13 +20,14 @@
     "@oclif/dev-cli": "^1.26.5",
     "eslint": "^8.3.0",
     "eslint-config-oclif": "^4.0.0",
-    "globby": "^12.0.2"
+    "globby": "^10.0.2"
   },
   "engines": {
     "node": ">=8.3.0"
   },
   "files": [
     "/bin",
+    ".oclif.manifest.json",
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json",
     "/src"
