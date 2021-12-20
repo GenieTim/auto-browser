@@ -51,8 +51,13 @@ class BrowseCommand extends Command {
         }
       }
     })
+
+    await this.driver.close()
+    await this.browser.close()
     if (this.errorCount <= 0) {
       this.exit()
+    } else {
+      this.exit(2)
     }
   }
 

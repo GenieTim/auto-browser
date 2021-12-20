@@ -34,7 +34,7 @@ class FillInstruction {
     let addNew = true
     while (addNew) {
       let field = {}
-      let selector = await cli.prompt('What is the field\'s selector?')
+      let selector = await cli.prompt("What is the field's selector?")
       let text = await cli.prompt('What should be filled in?')
       field[selector] = text
       fields.push(field)
@@ -59,23 +59,37 @@ class FillInstruction {
       // loop selectors
       await asyncForEach(fieldSelectors, async selector => {
         selector = this.adjustSelector(selector)
-        // select each field & type what is recommended
-        if (selector.startsWith('select')) {
-          // rudimentary check to act differently on <select><option>...
-          await driver.select(selector, field[fieldSelectors])
-        } else {
-          // first, clear form field
-          try {
-            await driver.evaluate(selector => {
-              // eslint-disable-next-line no-undef
-              document.querySelector(selector).value = ''
-            }, selector)
-          } catch (error) {
-            this.logger.warn('Failed to empty input with selector ' + selector + '. Error: ' + error)
-          }
+        try {
+          // select each field & type what is recommended
+          if (selector.startsWith('select')) {
+            // rudimentary check to act differently on <select><option>...
+            await driver.select(selector, field[fieldSelectors])
+          } else {
+            // first, clear form field
+            try {
+              await driver.evaluate(selector => {
+                // eslint-disable-next-line no-undef
+                document.querySelector(selector).value = ''
+              }, selector)
+            } catch (error) {
+              this.logger.warn(
+                'Failed to empty input with selector ' +
+                  selector +
+                  '. Error: ' +
+                  error,
+              )
+            }
 
-          // then, type value
-          await driver.type(selector, field[fieldSelectors])
+            // then, type value
+            await driver.type(selector, field[fieldSelectors])
+          }
+        } catch (error) {
+          this.logger.warn(
+            'Failed to fill fields for selector ' +
+              selector +
+              '. Error: ' +
+              error,
+          )
         }
       })
     })
