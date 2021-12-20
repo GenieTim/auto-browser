@@ -22,7 +22,7 @@ $ npm install -g auto-browser
 $ auto-browser COMMAND
 running command...
 $ auto-browser (-v|--version|version)
-auto-browser/1.0.1 darwin-x64 node-v17.0.1
+auto-browser/1.0.2 darwin-x64 node-v17.2.0
 $ auto-browser --help [COMMAND]
 USAGE
   $ auto-browser COMMAND
@@ -35,18 +35,18 @@ USAGE
 
 ## `auto-browser help [COMMAND]`
 
-display help for auto-browser
+Display help for auto-browser.
 
 ```
 USAGE
   $ auto-browser help [COMMAND]
 
 ARGUMENTS
-  COMMAND  command to show help for
+  COMMAND  Command to show help for.
 
 OPTIONS
-  --all  see all commands in CLI
+  -n, --nested-commands  Include all nested commands in the output.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.9/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.10/src/commands/help.ts)_
 <!-- commandsstop -->
