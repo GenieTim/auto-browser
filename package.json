@@ -1,7 +1,7 @@
 {
   "name": "auto-browser",
   "description": "Light abstraction onto puppeteer in order to simplify easy browser automation task",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Tim Bernhard @GenieTim",
   "bin": {
     "auto-browser": "./bin/run"
@@ -20,7 +20,8 @@
     "@oclif/dev-cli": "^1.26.10",
     "eslint": "^8.5.0",
     "eslint-config-oclif": "^4.0.0",
-    "globby": "^12.0.2"
+    "eslint-plugin-unicorn": "^39.0.0",
+    "globby": "^10.0.2"
   },
   "engines": {
     "node": ">=8.3.0"
