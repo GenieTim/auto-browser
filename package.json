@@ -14,11 +14,11 @@
     "cli-ux": "^6.0.9",
     "glob": "^8.0.3",
     "inquirer": "^8.2.4",
-    "puppeteer": "^14.1.0"
+    "puppeteer": "^14.1.1"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.10",
-    "eslint": "^8.15.0",
+    "eslint": "^8.16.0",
     "eslint-config-oclif": "^4.0.0",
     "eslint-plugin-unicorn": "^42.0.0",
     "globby": "^13.1.1"
