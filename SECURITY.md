@@ -14,7 +14,7 @@ We try to fix security errors as soon as possible and publish a new version with
 
 ## Security-Related Configuration
 
-We do not know of any security gaps.
+We do not know of any existing or previous security gaps.
 
 ## Known Security Gaps & Future Enhancements
 
