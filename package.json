@@ -10,18 +10,18 @@
   "dependencies": {
     "@oclif/command": "^1.8.36",
     "@oclif/config": "^1.18.17",
-    "@oclif/plugin-help": "^6.0.3",
+    "@oclif/plugin-help": "^6.0.5",
     "cli-ux": "^6.0.9",
     "glob": "^10.3.10",
-    "inquirer": "^9.2.11",
-    "puppeteer": "^21.3.8"
+    "inquirer": "^9.2.12",
+    "puppeteer": "^21.5.1"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.10",
-    "eslint": "^8.51.0",
+    "eslint": "^8.53.0",
     "eslint-config-oclif": "^5.0.0",
-    "eslint-plugin-unicorn": "^48.0.1",
-    "globby": "^13.2.2"
+    "eslint-plugin-unicorn": "^49.0.0",
+    "globby": "^14.0.0"
   },
   "engines": {
     "node": ">=8.3.0"
