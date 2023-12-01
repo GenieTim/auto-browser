@@ -1,5 +1,5 @@
 {
-  "extends": "oclif",
+  "extends": ["oclif", "prettier"],
   "rules": {
     "no-await-in-loop": "off"
   }

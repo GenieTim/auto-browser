@@ -1,5 +1,6 @@
-const {cli} = require('cli-ux')
-const asyncForEach = require('../utils/async-foreach')
+import {ux} from '@oclif/core'
+const cli = ux
+import asyncForEach from '../utils/async-foreach.js'
 
 /**
  * Fill form fields
@@ -30,12 +31,12 @@ class FillInstruction {
    * Create this instruction by requesting data from the user via CI
    */
   async createInteractively() {
-    let fields = []
+    const fields = []
     let addNew = true
     while (addNew) {
-      let field = {}
-      let selector = await cli.prompt("What is the field's selector?")
-      let text = await cli.prompt('What should be filled in?')
+      const field = {}
+      const selector = await cli.prompt("What is the field's selector?")
+      const text = await cli.prompt('What should be filled in?')
       field[selector] = text
       fields.push(field)
       addNew = await cli.confirm('Add another field?')
@@ -53,11 +54,11 @@ class FillInstruction {
    */
   async fillFields(fields, driver) {
     // loop fields array
-    await asyncForEach(fields, async field => {
+    await asyncForEach(fields, async (field) => {
       // find selectors for this field collection
-      let fieldSelectors = Object.keys(field)
+      const fieldSelectors = Object.keys(field)
       // loop selectors
-      await asyncForEach(fieldSelectors, async selector => {
+      await asyncForEach(fieldSelectors, async (selector) => {
         selector = this.adjustSelector(selector)
         try {
           // select each field & type what is recommended
@@ -67,29 +68,19 @@ class FillInstruction {
           } else {
             // first, clear form field
             try {
-              await driver.evaluate(selector => {
+              await driver.evaluate((selector) => {
                 // eslint-disable-next-line no-undef
                 document.querySelector(selector).value = ''
               }, selector)
             } catch (error) {
-              this.logger.warn(
-                'Failed to empty input with selector ' +
-                  selector +
-                  '. Error: ' +
-                  error,
-              )
+              this.logger.warn('Failed to empty input with selector ' + selector + '. Error: ' + error)
             }
 
             // then, type value
             await driver.type(selector, field[fieldSelectors])
           }
         } catch (error) {
-          this.logger.warn(
-            'Failed to fill fields for selector ' +
-              selector +
-              '. Error: ' +
-              error,
-          )
+          this.logger.warn('Failed to fill fields for selector ' + selector + '. Error: ' + error)
         }
       })
     })
@@ -104,8 +95,8 @@ class FillInstruction {
    */
   adjustSelector(selector) {
     try {
-      let today = new Date()
-      selector = selector.replace('$today', today.getDate())
+      const today = new Date()
+      selector = selector.replace('$today', today.getDate().toString())
     } catch (error) {
       this.logger.error(error)
     }
@@ -117,4 +108,5 @@ class FillInstruction {
 FillInstruction.identifier = 'fill'
 FillInstruction.description = 'Fill in form fields'
 
-module.exports = FillInstruction
+// module.exports = FillInstruction
+export default FillInstruction

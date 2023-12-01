@@ -20,4 +20,5 @@ class Sandman {
   }
 }
 
-module.exports = new Sandman()
+// module.exports = new Sandman()
+export default new Sandman()

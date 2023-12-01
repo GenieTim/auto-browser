@@ -1,5 +1,6 @@
-const {cli} = require('cli-ux')
-const asyncForEach = require('../utils/async-foreach')
+import asyncForEach from '../utils/async-foreach.js'
+import {ux} from '@oclif/core'
+const cli = ux
 
 /**
  * The click selector in browser
@@ -45,16 +46,16 @@ class ClickInstruction {
   async clickMultiple(instruction, driver) {
     let elements = await driver.$$(instruction.selector)
     switch (instruction.multiple) {
-    case 'last':
-      await elements[elements.length - 1].click()
-      break
-    case 'first':
-      await elements[0].click()
-      break
-    case 'all':
-      await asyncForEach(elements, async element => {
-        await element.click()
-      })
+      case 'last':
+        await elements[elements.length - 1].click()
+        break
+      case 'first':
+        await elements[0].click()
+        break
+      case 'all':
+        await asyncForEach(elements, async (element) => {
+          await element.click()
+        })
     }
   }
 
@@ -69,7 +70,7 @@ class ClickInstruction {
     try {
       try {
         // prevent all possible tab juggling until there are appropriate instructions
-        await driver.evaluate(selector => {
+        await driver.evaluate((selector) => {
           return new Promise((resolve, _) => {
             // eslint-disable-next-line no-undef
             const target = document.querySelector(selector)
@@ -88,7 +89,7 @@ class ClickInstruction {
     } catch (error) {
       this.logger.warn('Click failed on ' + selector + ', using fall-back js click. Error: ' + error)
       // throws:
-      await driver.evaluate(selector => {
+      await driver.evaluate((selector) => {
         // eslint-disable-next-line no-undef
         return Promise.resolve(document.querySelector(selector).click()).catch(e)
       }, selector)
@@ -105,7 +106,7 @@ class ClickInstruction {
   adjustSelector(selector) {
     try {
       let today = new Date()
-      selector = selector.replace('$today', today.getDate())
+      selector = selector.replace('$today', today.getDate().toString())
     } catch (error) {
       this.logger.warn(error)
     }
@@ -117,4 +118,5 @@ class ClickInstruction {
 ClickInstruction.identifier = 'click'
 ClickInstruction.description = 'Click on something'
 
-module.exports = ClickInstruction
+// module.exports = ClickInstruction
+export default ClickInstruction

@@ -1,5 +1,7 @@
-const {cli} = require('cli-ux')
-const sandman = require('../utils/sandman')
+
+import { ux } from '@oclif/core'
+const cli = ux;
+import sandman from '../utils/sandman.js'
 
 /**
  * The click selector in browser
@@ -32,4 +34,5 @@ class SleepInstruction {
 SleepInstruction.identifier = 'sleep'
 SleepInstruction.description = 'Sleep for some time'
 
-module.exports = SleepInstruction
+// module.exports = SleepInstruction
+export default SleepInstruction

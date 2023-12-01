@@ -1,7 +1,13 @@
-const {cli} = require('cli-ux')
-const asyncForEach = require('../utils/async-foreach')
-const fs = require('node:fs')
-const path = require('node:path')
+
+import fs from 'fs'
+import path from 'path'
+import { ux } from '@oclif/core'
+
+const cli = ux;
+import asyncForEach from '../utils/async-foreach.js'
+import {URL} from 'url'
+const __filename = new URL('', import.meta.url).pathname
+const __dirname = new URL('.', import.meta.url).pathname
 
 /**
  * Fill form fields based on
@@ -117,7 +123,7 @@ class FillCleverlyInstruction {
   adjustSelector(selector) {
     try {
       let today = new Date()
-      selector = selector.replace('$today', today.getDate())
+      selector = selector.replace('$today', today.getDate().toString())
     } catch (error) {
       this.logger.error(error)
     }
@@ -150,4 +156,5 @@ FillCleverlyInstruction.identifier = 'cleverfill'
 FillCleverlyInstruction.description =
   'Fill in form fields based on global information'
 
-module.exports = FillCleverlyInstruction
+// module.exports = FillCleverlyInstruction
+export default FillCleverlyInstruction

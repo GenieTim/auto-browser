@@ -1,11 +1,16 @@
-const {Command} = require('@oclif/command')
-const fs = require('fs')
-const path = require('path')
-const {cli} = require('cli-ux')
+import {Command} from '@oclif/core'
+import fs from 'fs'
+import path from 'path'
+import { ux } from '@oclif/core'
+const cli = ux;
+
+import {URL} from 'url'
+const __filename = new URL('', import.meta.url).pathname
+const __dirname = new URL('.', import.meta.url).pathname
 
 class ListCommand extends Command {
   async run() {
-    const {flags} = this.parse(ListCommand)
+    const {flags} =await  this.parse(ListCommand)
     let localAvailablePages = []
     for (const file of fs.readdirSync(path.join(__dirname, '../../webpages'))) {
       let filePath = path.join(__dirname, '../../webpages', file)
@@ -57,4 +62,5 @@ ListCommand.flags = {
   ...cli.table.flags(),
 }
 
-module.exports = ListCommand
+// module.exports = ListCommand
+export default ListCommand

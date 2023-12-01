@@ -1,6 +1,6 @@
-const {cli} = require('cli-ux')
-const inquirer = require('inquirer')
-
+import {ux} from '@oclif/core'
+import {select} from '@inquirer/prompts'
+const cli = ux
 /**
  * The click selector in browser
  */
@@ -27,16 +27,11 @@ class ScrollInstruction {
    * Create this instruction by requesting data from the user via CI
    */
   async createInteractively() {
-    let answers = await inquirer.prompt([{
-      type: 'list',
-      name: 'distance',
+    let distance = await select({
       message: 'How far would you like to scroll?',
-      choices: [
-        'To bottom',
-        'To selector',
-      ],
-    }])
-    if (answers.distance === 'To selector') {
+      choices: ['To bottom', 'To selector'],
+    })
+    if (distance === 'To selector') {
       return {
         selector: await cli.prompt('What is the selector of where to scroll?'),
       }
@@ -46,7 +41,7 @@ class ScrollInstruction {
   }
 
   async scrollTo(selector) {
-    await this.driver.$eval(selector, e => {
+    await this.driver.$eval(selector, (e) => {
       e.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'end'})
     })
   }
@@ -55,7 +50,7 @@ class ScrollInstruction {
     let distance = this.extractProperty(options, 'distance', 100) // should be less than or equal to window.innerHeight
     let delay = this.extractProperty(options, 'delay', 7)
     await this.driver.evaluate(async () => {
-      await new Promise(resolve => {
+      await new Promise((resolve) => {
         const timer = setInterval(() => {
           // eslint-disable-next-line no-undef
           document.scrollingElement.scrollBy(0, distance)
@@ -77,4 +72,5 @@ class ScrollInstruction {
 ScrollInstruction.identifier = 'scroll'
 ScrollInstruction.description = 'Scroll somewhere'
 
-module.exports = ScrollInstruction
+// module.exports = ScrollInstruction
+export default ScrollInstruction

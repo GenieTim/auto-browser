@@ -1,14 +1,19 @@
-const {Command, flags} = require('@oclif/command')
-const fs = require('fs')
-const path = require('path')
-const glob = require('glob')
-const asyncForEach = require('../utils/async-foreach')
-const puppeteer = require('puppeteer')
-const sandman = require('../utils/sandman')
-const executeFunctionByName = require('../utils/execute-function-by-name')
-const instructions = require('../instructions')
-const {cli} = require('cli-ux')
+import {Command, Flags} from '@oclif/core'
+import fs from 'fs'
+import path from 'path'
+import {glob} from 'glob'
+import asyncForEach from '../utils/async-foreach.js'
+import puppeteer from 'puppeteer'
+import sandman from '../utils/sandman.js'
+import executeFunctionByName from '../utils/execute-function-by-name.js'
+import instructions from '../instructions/index.js'
+import { ux } from '@oclif/core'
 
+const cli = ux;
+
+import {URL} from 'url'
+const __filename = new URL('', import.meta.url).pathname
+const __dirname = new URL('.', import.meta.url).pathname
 // find all available pages
 const sourceDir = path.join(__dirname, '../../webpages')
 let availableFiles = glob.sync(path.join(sourceDir, '*.json'), {
@@ -21,7 +26,7 @@ for (const file of availableFiles) {
 
 class BrowseCommand extends Command {
   async run() {
-    const {argv, flags} = this.parse(BrowseCommand)
+    const {argv, flags} = await this.parse(BrowseCommand)
     this.debug = flags.debug
 
     let files = argv
@@ -170,8 +175,11 @@ BrowseCommand.args = [{
 }]
 
 BrowseCommand.flags = {
-  debug: flags.boolean({char: 'd', description: 'debug: get additional logs, show browser (disable headless)', default: false}),
-  confirmNext: flags.boolean({char: 'c', description: 'confirm next: require user (CI) interaction before moving to next page', default: false}),
+  version: Flags.version(),
+  help: Flags.help(),
+  debug: Flags.boolean({char: 'd', description: 'debug: get additional logs, show browser (disable headless)', default: false}),
+  confirmNext: Flags.boolean({char: 'c', description: 'confirm next: require user (CI) interaction before moving to next page', default: false}),
 }
 
-module.exports = BrowseCommand
+// module.exports = BrowseCommand
+export default BrowseCommand

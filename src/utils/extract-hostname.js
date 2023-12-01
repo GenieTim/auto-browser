@@ -1,5 +1,5 @@
 // https://stackoverflow.com/questions/8498592/extract-hostname-name-from-string
-function extractHostname(url) {
+export default function extractHostname(url) {
   var hostname
   // find & remove protocol (http, ftp, etc.) and get hostname
 
@@ -13,4 +13,4 @@ function extractHostname(url) {
   return hostname
 }
 
-module.exports = extractHostname
+// module.exports = extractHostname

@@ -23,4 +23,5 @@ class AbstractInstruction {
 AbstractInstruction.identifier = 'abstract'
 AbstractInstruction.description = 'Test'
 
-module.exports = AbstractInstruction
+// module.exports = AbstractInstruction
+export default AbstractInstruction

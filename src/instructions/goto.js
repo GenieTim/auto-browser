@@ -1,4 +1,7 @@
-const {cli} = require('cli-ux')
+
+import { ux } from '@oclif/core'
+
+const cli = ux;
 
 /**
  * The goto/open/... URL in browser
@@ -26,4 +29,5 @@ class GotoInstruction {
 GotoInstruction.identifier = 'goto'
 GotoInstruction.description = 'Open an URL'
 
-module.exports = GotoInstruction
+// module.exports = GotoInstruction
+export default GotoInstruction

@@ -1,26 +1,41 @@
-const {Command, flags} = require('@oclif/command')
-const inquirer = require('inquirer')
-const fs = require('fs')
-const path = require('path')
-const {cli} = require('cli-ux')
-const extractHostname = require('../utils/extract-hostname')
-const instructions = require('../instructions')
-const crypto = require('crypto')
+import {Command, Flags} from '@oclif/core'
+import {select} from '@inquirer/prompts'
+import fs from 'fs'
+import path from 'path'
+import {ux} from '@oclif/core'
+
+const cli = ux
+import extractHostname from '../utils/extract-hostname.js'
+import instructions from '../instructions/index.js'
+import crypto from 'crypto'
+import {URL} from 'url'
+const __filename = new URL('', import.meta.url).pathname
+const __dirname = new URL('.', import.meta.url).pathname
 
 class GenerateCommand extends Command {
   async run() {
     // get args & flags as necessary
-    const {flags} = this.parse(GenerateCommand)
+    const {flags} = await this.parse(GenerateCommand)
 
     // setup local vars
-    this.instructionChoices = {}
+    // this.instructionChoices = {}
 
+    // for (let instructionKey in instructions) {
+    //   if (Object.prototype.hasOwnProperty.call(instructions, instructionKey)) {
+    //     let instruction = instructions[instructionKey]
+    //     this.instructionChoices[instruction.identifier] = instruction.description
+    //   }
+    // }
+
+    this.instructionChoicesArray = [];
     for (let instructionKey in instructions) {
-      if (Object.prototype.hasOwnProperty.call(instructions, instructionKey)) {
-        let instruction = instructions[instructionKey]
-        this.instructionChoices[instruction.identifier] = instruction.description
-      }
+      this.instructionChoicesArray.push({
+        "value": instructionKey,
+        "name": instructions[instructionKey].description
+      })
     }
+    // this.log(instructions);
+    // this.log(this.instructionChoicesArray);
 
     // start asking
     let site = {}
@@ -46,7 +61,11 @@ class GenerateCommand extends Command {
     // I hope there will never even a second attempt be necessary
     let attempts = 0
     while (fs.existsSync(target) && attempts < 10) {
-      target = path.join(__dirname, '../../webpages', extractHostname(url) + '-' + crypto.randomBytes(10).toString('hex') + '.json')
+      target = path.join(
+        __dirname,
+        '../../webpages',
+        extractHostname(url) + '-' + crypto.randomBytes(10).toString('hex') + '.json',
+      )
       attempts += 1
     }
 
@@ -62,17 +81,10 @@ class GenerateCommand extends Command {
    * @return {object} the instruction object
    */
   async getInstruction() {
-    let answers = await inquirer.prompt([{
-      type: 'list',
-      name: 'instruction',
+    let instructionChoice = await select({
       message: 'What would you like the task to do?',
-      choices: Object.values(this.instructionChoices),
-      filter: val => {
-        // get key by value
-        return Object.keys(this.instructionChoices).find(key => this.instructionChoices[key] === val)
-      },
-    }])
-    let instructionChoice = answers.instruction
+      choices: this.instructionChoicesArray,
+    })
     let instruction = {}
     if (Object.prototype.hasOwnProperty.call(instructions, instructionChoice)) {
       let instructor = new instructions[instructionChoice]()
@@ -91,7 +103,10 @@ GenerateCommand.description = `Generate a new config for a webpage to browse - i
 `
 
 GenerateCommand.flags = {
-  debug: flags.string({char: 'd', description: 'debug: write some more stuff'}),
+  version: Flags.version(),
+  help: Flags.help(),
+  debug: Flags.string({char: 'd', description: 'debug: write some more stuff'}),
 }
 
-module.exports = GenerateCommand
+// module.exports = GenerateCommand
+export default GenerateCommand

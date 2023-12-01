@@ -1,7 +1,9 @@
-const {cli} = require('cli-ux')
-const inquirer = require('inquirer')
-const sandman = require('../utils/sandman')
+import { select } from '@inquirer/prompts';
+import sandman from '../utils/sandman.js'
 
+import {ux} from '@oclif/core'
+
+const cli = ux
 /**
  * Wait for user to do something
  */
@@ -40,15 +42,13 @@ class UserWaitInstruction {
    * Create this instruction by requesting data from the user via CI
    */
   async createInteractively() {
-    let answers = await inquirer.prompt([{
-      type: 'list',
-      name: 'end',
+    let end = await select({
       message: 'How do you want the instruction to end?',
       choices: ['Navigation', 'CI-Enter'],
-    }])
+    })
 
     return {
-      end: answers.end,
+      end: end,
     }
   }
 }
@@ -56,4 +56,5 @@ class UserWaitInstruction {
 UserWaitInstruction.identifier = 'user-wait'
 UserWaitInstruction.description = 'Wait for user to do something in the browser'
 
-module.exports = UserWaitInstruction
+// module.exports = UserWaitInstruction
+export default UserWaitInstruction
