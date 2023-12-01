@@ -31,10 +31,13 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`auto-browser browse [WEBPAGE]`](#auto-browser-browse-webpage)
-* [`auto-browser generate`](#auto-browser-generate)
-* [`auto-browser help [COMMAND]`](#auto-browser-help-command)
-* [`auto-browser list`](#auto-browser-list)
+- [auto-browser](#auto-browser)
+- [Usage](#usage)
+- [Commands](#commands)
+  - [`auto-browser browse [WEBPAGE]`](#auto-browser-browse-webpage)
+  - [`auto-browser generate`](#auto-browser-generate)
+  - [`auto-browser help [COMMAND]`](#auto-browser-help-command)
+  - [`auto-browser list`](#auto-browser-list)
 
 ## `auto-browser browse [WEBPAGE]`
 
@@ -45,8 +48,7 @@ USAGE
   $ auto-browser browse [WEBPAGE]
 
 ARGUMENTS
-  WEBPAGE  (www.games.ch.json|www.grandcasino-bern.ch.json|www.houseofbeer.ch.json|www.kalendoo.com.json|xmas.toppreise.
-           ch.json|zattoo-adventskalender.com.json|zzz_adventcalendar.myswitzerland.com.json) The page to browse
+  WEBPAGE  (your json files) The page to browse. No argument = one after another.
 
 OPTIONS
   -c, --confirmNext  confirm next: require user (CI) interaction before moving to next page
