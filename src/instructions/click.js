@@ -1,5 +1,6 @@
 import asyncForEach from '../utils/async-foreach.js'
 import {ux} from '@oclif/core'
+import adjustSelector from '../utils/adjustSelector.js'
 const cli = ux
 
 /**
@@ -66,7 +67,7 @@ class ClickInstruction {
    * @param {module.puppeteer.Browser} driver the browser page to execute upon
    */
   async clickOne(selector, driver) {
-    selector = this.adjustSelector(selector)
+    selector = adjustSelector(selector)
     try {
       try {
         // prevent all possible tab juggling until there are appropriate instructions
@@ -94,24 +95,6 @@ class ClickInstruction {
         return Promise.resolve(document.querySelector(selector).click()).catch(e)
       }, selector)
     }
-  }
-
-  /**
-   * Hacky temporary adjustment for some ideas
-   *
-   * @todo outsource to its own instructionset
-   * @param {string} selector the selector to adjust
-   * @returns {string} the adjusted string/selector
-   */
-  adjustSelector(selector) {
-    try {
-      let today = new Date()
-      selector = selector.replace('$today', today.getDate().toString())
-    } catch (error) {
-      this.logger.warn(error)
-    }
-
-    return selector
   }
 }
 

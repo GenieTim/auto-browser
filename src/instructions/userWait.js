@@ -1,4 +1,4 @@
-import { select } from '@inquirer/prompts';
+import {select} from '@inquirer/prompts'
 import sandman from '../utils/sandman.js'
 
 import {ux} from '@oclif/core'
@@ -44,7 +44,7 @@ class UserWaitInstruction {
   async createInteractively() {
     let end = await select({
       message: 'How do you want the instruction to end?',
-      choices: ['Navigation', 'CI-Enter'],
+      choices: [{value: 'Navigation'}, {value: 'CI-Enter'}],
     })
 
     return {

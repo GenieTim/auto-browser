@@ -1,5 +1,7 @@
 import {ux} from '@oclif/core'
 import {select} from '@inquirer/prompts'
+
+import adjustSelector from '../utils/adjustSelector.js'
 const cli = ux
 /**
  * The click selector in browser
@@ -29,7 +31,7 @@ class ScrollInstruction {
   async createInteractively() {
     let distance = await select({
       message: 'How far would you like to scroll?',
-      choices: ['To bottom', 'To selector'],
+      choices: [{value: 'To bottom'}, {value: 'To selector'}],
     })
     if (distance === 'To selector') {
       return {
@@ -41,6 +43,7 @@ class ScrollInstruction {
   }
 
   async scrollTo(selector) {
+    selector = adjustSelector(selector)
     await this.driver.$eval(selector, (e) => {
       e.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'end'})
     })
