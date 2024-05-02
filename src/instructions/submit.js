@@ -40,6 +40,8 @@ class SubmitInstruction {
    * @param {module.puppeteer.Browser} driver the browser page to execute upon
    */
   async submitForm(empty, driver) {
+    // TODO: let's submit the form with the most fields (not to submit e.g. the search form also present on a page)
+
     let possibleSelectors = ['input[type="submit"]', 'button[type="submit"]', 'button.nex-submit']
 
     let res = asyncForEach(possibleSelectors, async (selector) => {

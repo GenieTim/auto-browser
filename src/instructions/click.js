@@ -77,6 +77,7 @@ class ClickInstruction {
             const target = document.querySelector(selector)
             if (target) {
               target.target = '_self'
+              target.setAttribute('target', '_self')
             }
 
             resolve()
