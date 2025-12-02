@@ -28,10 +28,16 @@ class BrowseCommand extends Command {
   async run() {
     const {argv, flags} = await this.parse(BrowseCommand)
     this.debug = flags.debug
+    this.dryRun = flags.dryRun
 
     let files = argv
     if (files.length === 0) {
       files = availablePages
+    }
+
+    if (this.dryRun) {
+      this.log('🔍 DRY RUN MODE - Validating configurations without executing...')
+      return this.validateConfigurations(files)
     }
 
     this.instructionContext = {}
@@ -60,9 +66,60 @@ class BrowseCommand extends Command {
     await this.driver.close()
     await this.browser.close()
     if (this.errorCount <= 0) {
+      this.log('✅ All pages processed successfully!')
       this.exit()
     } else {
+      this.warn(`⚠️  Completed with ${this.errorCount} error(s)`)
       this.exit(2)
+    }
+  }
+
+  /**
+   * Validate configuration files without executing
+   *
+   * @param {string[]} files the configuration files to validate
+   */
+  async validateConfigurations(files) {
+    let validCount = 0
+    let invalidCount = 0
+    
+    await asyncForEach(files, async filename => {
+      try {
+        const config = JSON.parse(fs.readFileSync(path.join(__dirname, '../../webpages', filename), 'utf8'))
+        
+        if (!config.name) {
+          throw new Error('Missing "name" field')
+        }
+        
+        if (!Array.isArray(config.instructions) || config.instructions.length === 0) {
+          throw new Error('Missing or empty "instructions" array')
+        }
+        
+        // Validate each instruction
+        config.instructions.forEach((instruction, index) => {
+          const commands = Object.keys(instruction)
+          if (commands.length === 0) {
+            throw new Error(`Instruction ${index} has no commands`)
+          }
+          
+          commands.forEach(command => {
+            if (!instructions[command] && command !== 'end') {
+              this.warn(`  Unknown instruction type: "${command}" at index ${index}`)
+            }
+          })
+        })
+        
+        this.log(`✅ ${filename}: ${config.name} (${config.instructions.length} instructions)`)
+        validCount++
+      } catch (error) {
+        this.error(`❌ ${filename}: ${error.message}`)
+        invalidCount++
+      }
+    })
+    
+    this.log(`\n📊 Validation Summary: ${validCount} valid, ${invalidCount} invalid`)
+    if (invalidCount > 0) {
+      this.exit(1)
     }
   }
 
@@ -179,6 +236,7 @@ BrowseCommand.flags = {
   help: Flags.help(),
   debug: Flags.boolean({char: 'd', description: 'debug: get additional logs, show browser (disable headless)', default: false}),
   confirmNext: Flags.boolean({char: 'c', description: 'confirm next: require user (CI) interaction before moving to next page', default: false}),
+  dryRun: Flags.boolean({description: 'dry-run: validate configurations without executing browser actions', default: false}),
 }
 
 // module.exports = BrowseCommand

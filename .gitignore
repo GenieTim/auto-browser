@@ -24,6 +24,7 @@
 *.seed
 *.tgz
 .env
+.env.local
 .eslintcache
 .grunt
 .lock-wscript
@@ -53,3 +54,4 @@ webpages/*.json
 webpages/archived/*.json
 
 user_data
+global-fields.json

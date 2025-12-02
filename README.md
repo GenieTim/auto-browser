@@ -12,9 +12,82 @@ Light abstraction onto puppeteer in order to simplify easy browser automation ta
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
+
+# Features
+
+- 🎯 **Simple Configuration**: JSON-based configuration files for browser automation
+- 🔄 **Reusable Instructions**: Built-in commands (click, fill, scroll, wait, etc.)
+- 🎄 **Advent Calendar Friendly**: Special `$today` variable for daily competitions
+- 💾 **Persistent Sessions**: Maintains cookies and login state between runs
+- 🔒 **Privacy-First**: Environment variable support for sensitive data
+- 🐛 **Developer Friendly**: Debug mode, dry-run validation, interactive generation
+
 # Usage
+
 Example usage includes automatic participation in christmas/advent competitions 
 so you do not have to do it manually, 24 times.
+
+## Quick Start
+
+```bash
+# Install globally
+npm install -g auto-browser
+
+# Generate a new configuration interactively
+auto-browser generate
+
+# Run a specific configuration
+auto-browser browse www.example.com.json
+
+# Run all configurations
+auto-browser browse
+
+# Debug mode (show browser)
+auto-browser browse --debug
+
+# Validate configurations without running
+auto-browser browse --dryRun
+
+# List all available configurations
+auto-browser list
+```
+
+## Configuration Example
+
+```json
+{
+  "name": "Daily Competition",
+  "instructions": [
+    {"goto": "https://example.com/advent"},
+    {"click": ".door-$today"},
+    {"cleverfill": []},
+    {"click": "button[type='submit']"},
+    {"user-wait": {"end": "CI-Enter"}}
+  ]
+}
+```
+
+## Available Variables
+
+- `$today` - Current day of month (1-31)
+- `$month` - Current month (1-12)
+- `$year` - Current year (e.g., 2025)
+- `$dayOfWeek` - Day of week (0-6, Sunday=0)
+- `$env{NAME}` - Environment variable value
+
+## Environment Variables
+
+Create a `.env` file for sensitive data:
+
+```bash
+COMPETITION_EMAIL=your.email@example.com
+COMPETITION_PHONE=+41123456789
+```
+
+Use in configurations:
+```json
+{"fill": {"selector": "input[name='email']", "text": "$env{COMPETITION_EMAIL}"}}
+```
 
 <!-- usage -->
 ```sh-session
@@ -32,7 +105,12 @@ USAGE
 # Commands
 <!-- commands -->
 - [auto-browser](#auto-browser)
+- [Features](#features)
 - [Usage](#usage)
+  - [Quick Start](#quick-start)
+  - [Configuration Example](#configuration-example)
+  - [Available Variables](#available-variables)
+  - [Environment Variables](#environment-variables)
 - [Commands](#commands)
   - [`auto-browser browse [WEBPAGE]`](#auto-browser-browse-webpage)
   - [`auto-browser generate`](#auto-browser-generate)
