@@ -1,6 +1,5 @@
 
-import { ux } from '@oclif/core'
-const cli = ux;
+import {input} from '@inquirer/prompts'
 import sandman from '../utils/sandman.js'
 
 /**
@@ -27,7 +26,7 @@ class SleepInstruction {
    * Create this instruction by requesting data from the user via CI
    */
   async createInteractively() {
-    return cli.prompt('How many miliseconds do you want the browser to sleep?')
+    return input({message: 'How many miliseconds do you want the browser to sleep?'})
   }
 }
 

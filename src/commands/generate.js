@@ -1,10 +1,7 @@
 import {Command, Flags} from '@oclif/core'
-import {select} from '@inquirer/prompts'
+import {select, input, confirm} from '@inquirer/prompts'
 import fs from 'fs'
 import path from 'path'
-import {ux} from '@oclif/core'
-
-const cli = ux
 import extractHostname from '../utils/extract-hostname.js'
 import instructions from '../instructions/index.js'
 import crypto from 'crypto'
@@ -39,8 +36,8 @@ class GenerateCommand extends Command {
 
     // start asking
     let site = {}
-    site.name = await cli.prompt('What is the name of the task?')
-    let url = await cli.prompt('What is the base URL of the task?')
+    site.name = await input({message: 'What is the name of the task?'})
+    let url = await input({message: 'What is the base URL of the task?'})
     site.instructions = []
     site.instructions.push({
       goto: url,
@@ -48,7 +45,7 @@ class GenerateCommand extends Command {
     let addNew = true
     while (addNew) {
       site.instructions.push(await this.getInstruction())
-      addNew = await cli.confirm('Add another instruction?')
+      addNew = await confirm({message: 'Add another instruction?'})
     }
 
     // Do we want to end the session after each

@@ -1,8 +1,5 @@
-import {ux} from '@oclif/core'
-import {select} from '@inquirer/prompts'
-
-import adjustSelector from '../utils/adjustSelector.js'
-const cli = ux
+import {input, select} from '@inquirer/prompts'
+import replaceVariables from '../utils/replaceVariables.js'
 /**
  * The click selector in browser
  */
@@ -35,7 +32,7 @@ class ScrollInstruction {
     })
     if (distance === 'To selector') {
       return {
-        selector: await cli.prompt('What is the selector of where to scroll?'),
+        selector: await input({message: 'What is the selector of where to scroll?'}),
       }
     }
 
@@ -43,7 +40,7 @@ class ScrollInstruction {
   }
 
   async scrollTo(selector) {
-    selector = adjustSelector(selector)
+    selector = replaceVariables(selector)
     await this.driver.$eval(selector, (e) => {
       e.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'end'})
     })

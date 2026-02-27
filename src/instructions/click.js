@@ -1,7 +1,6 @@
 import asyncForEach from '../utils/async-foreach.js'
-import {ux} from '@oclif/core'
-import adjustSelector from '../utils/adjustSelector.js'
-const cli = ux
+import {input} from '@inquirer/prompts'
+import replaceVariables from '../utils/replaceVariables.js'
 
 /**
  * The click selector in browser
@@ -35,7 +34,7 @@ class ClickInstruction {
    * Create this instruction by requesting data from the user via CI
    */
   async createInteractively() {
-    return cli.prompt('What is the selector of what to click?')
+    return input({message: 'What is the selector of what to click?'})
   }
 
   /**
@@ -67,7 +66,7 @@ class ClickInstruction {
    * @param {module.puppeteer.Browser} driver the browser page to execute upon
    */
   async clickOne(selector, driver) {
-    selector = adjustSelector(selector)
+    selector = replaceVariables(selector)
     try {
       try {
         // prevent all possible tab juggling until there are appropriate instructions

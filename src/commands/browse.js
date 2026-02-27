@@ -7,9 +7,7 @@ import puppeteer from 'puppeteer'
 import sandman from '../utils/sandman.js'
 import executeFunctionByName from '../utils/execute-function-by-name.js'
 import instructions from '../instructions/index.js'
-import { ux } from '@oclif/core'
-
-const cli = ux;
+import {confirm} from '@inquirer/prompts'
 
 import {URL} from 'url'
 const __filename = new URL('', import.meta.url).pathname
@@ -58,7 +56,7 @@ class BrowseCommand extends Command {
       if (flags.confirmNext) {
         let goOn = false
         while (!goOn) {
-          goOn = await cli.confirm('Ready to go to next page?')
+          goOn = await confirm({message: 'Ready to go to next page?'})
         }
       }
     })
@@ -82,33 +80,33 @@ class BrowseCommand extends Command {
   async validateConfigurations(files) {
     let validCount = 0
     let invalidCount = 0
-    
+
     await asyncForEach(files, async filename => {
       try {
         const config = JSON.parse(fs.readFileSync(path.join(__dirname, '../../webpages', filename), 'utf8'))
-        
+
         if (!config.name) {
           throw new Error('Missing "name" field')
         }
-        
+
         if (!Array.isArray(config.instructions) || config.instructions.length === 0) {
           throw new Error('Missing or empty "instructions" array')
         }
-        
+
         // Validate each instruction
         config.instructions.forEach((instruction, index) => {
           const commands = Object.keys(instruction)
           if (commands.length === 0) {
             throw new Error(`Instruction ${index} has no commands`)
           }
-          
+
           commands.forEach(command => {
             if (!instructions[command] && command !== 'end') {
               this.warn(`  Unknown instruction type: "${command}" at index ${index}`)
             }
           })
         })
-        
+
         this.log(`✅ ${filename}: ${config.name} (${config.instructions.length} instructions)`)
         validCount++
       } catch (error) {
@@ -116,7 +114,7 @@ class BrowseCommand extends Command {
         invalidCount++
       }
     })
-    
+
     this.log(`\n📊 Validation Summary: ${validCount} valid, ${invalidCount} invalid`)
     if (invalidCount > 0) {
       this.exit(1)
@@ -127,10 +125,17 @@ class BrowseCommand extends Command {
    * Set up the browser
    */
   async initializeBrowser() {
-    this.browser = await puppeteer.launch({
+    let options = {
       headless: !this.debug,
       userDataDir: './user_data',
-    })
+      protocolTimeout: 180000, // 3 minutes (default is 30 seconds)
+    }
+
+    if (this.debug) {
+      options.defaultViewport = null
+    }
+
+    this.browser = await puppeteer.launch(options)
     await this.openNewPage()
   }
 
@@ -143,10 +148,6 @@ class BrowseCommand extends Command {
     } catch (error) {
       this.logger.error(error)
       return
-    }
-
-    if (this.debug) {
-      this.driver.setViewport({width: 0, height: 0})
     }
   }
 

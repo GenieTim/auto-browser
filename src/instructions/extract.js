@@ -1,5 +1,4 @@
-import {ux} from '@oclif/core'
-const cli = ux
+import {input} from '@inquirer/prompts'
 
 /**
  * Extract/capture data from the page and store in context
@@ -50,11 +49,13 @@ class ExtractInstruction {
    * Create this instruction by requesting data from the user via CI
    */
   async createInteractively() {
-    const selector = await cli.prompt('What is the selector to extract data from?')
-    const attribute = await cli.prompt('What attribute to extract? (text/value/href/etc, leave empty for text)', {
+    const selector = await input({message: 'What is the selector to extract data from?'})
+    const attribute = await input({
+      message: 'What attribute to extract? (text/value/href/etc, leave empty for text)',
       default: 'text',
     })
-    const contextKey = await cli.prompt('What context key to store the value under?', {
+    const contextKey = await input({
+      message: 'What context key to store the value under?',
       default: 'extractedValue',
     })
 

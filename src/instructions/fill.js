@@ -1,5 +1,4 @@
-import {ux} from '@oclif/core'
-const cli = ux
+import {input, confirm} from '@inquirer/prompts'
 import asyncForEach from '../utils/async-foreach.js'
 
 /**
@@ -35,11 +34,11 @@ class FillInstruction {
     let addNew = true
     while (addNew) {
       const field = {}
-      const selector = await cli.prompt("What is the field's selector?")
-      const text = await cli.prompt('What should be filled in?')
+      const selector = await input({message: "What is the field's selector?"})
+      const text = await input({message: 'What should be filled in?'})
       field[selector] = text
       fields.push(field)
-      addNew = await cli.confirm('Add another field?')
+      addNew = await confirm({message: 'Add another field?'})
     }
 
     return fields
@@ -59,7 +58,7 @@ class FillInstruction {
       const fieldSelectors = Object.keys(field)
       // loop selectors
       await asyncForEach(fieldSelectors, async (selector) => {
-        selector = this.adjustSelector(selector)
+        selector = this.replaceVariables(selector)
         try {
           // select each field & type what is recommended
           if (selector.startsWith('select')) {
@@ -93,7 +92,7 @@ class FillInstruction {
    * @param {string} selector the selector to adjust
    * @returns {string} the adjusted string/selector
    */
-  adjustSelector(selector) {
+  replaceVariables(selector) {
     try {
       const today = new Date()
       selector = selector.replace('$today', today.getDate().toString())

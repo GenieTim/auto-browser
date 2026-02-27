@@ -81,7 +81,7 @@ This allows reusing personal data across multiple competition forms without repe
 
 #### Key Helper Functions
 
-- **`adjustSelector(selector)`** - Replaces template variables like `$today` with actual values
+- **`replaceVariables(selector)`** - Replaces template variables like `$today` with actual values
 - **`sandman.sleep(ms)`** / `sandman.randomSleep(max)`** - Delays with human-like randomness
 - **`asyncForEach(array, callback)`** - Sequential async iteration
 - **`executeFunctionByName(name, context, args)`** - Dynamic method invocation
@@ -161,7 +161,7 @@ const previousValue = context.capturedValue
 
 ## Important Implementation Notes
 
-1. **Selector Adjustment**: Always use `adjustSelector()` on user-provided selectors to support template variables
+1. **Selector Adjustment**: Always use `replaceVariables()` on user-provided selectors to support template variables
 2. **Sleep Usage**: Add `randomSleep()` between actions to appear more human-like
 3. **Tab Handling**: Code attempts to prevent new tabs (sets `target="_self"`), as tab juggling isn't fully implemented
 4. **Persistent Data**: Browser profile in `user_data/` maintains state—delete to reset sessions

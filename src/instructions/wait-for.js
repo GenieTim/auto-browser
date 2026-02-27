@@ -1,7 +1,5 @@
-import {ux} from '@oclif/core'
-import adjustSelector from '../utils/adjustSelector.js'
-
-const cli = ux
+import {input, confirm} from '@inquirer/prompts'
+import replaceVariables from '../utils/replaceVariables.js'
 
 /**
  * Wait for an element to appear or condition to be met
@@ -25,7 +23,7 @@ class WaitForInstruction {
    */
   async follow(instruction, driver, _) {
     const {selector, timeout = 30000, visible = false} = instruction
-    const adjustedSelector = adjustSelector(selector)
+    const adjustedSelector = replaceVariables(selector)
 
     try {
       this.logger.log(`Waiting for ${adjustedSelector}${visible ? ' to be visible' : ''}...`)
@@ -44,9 +42,9 @@ class WaitForInstruction {
    * Create this instruction by requesting data from the user via CI
    */
   async createInteractively() {
-    const selector = await cli.prompt('What selector should we wait for?')
-    const visible = await cli.confirm('Wait for it to be visible?')
-    const timeout = await cli.prompt('Timeout in milliseconds?', {default: '30000'})
+    const selector = await input({message: 'What selector should we wait for?'})
+    const visible = await confirm({message: 'Wait for it to be visible?'})
+    const timeout = await input({message: 'Timeout in milliseconds?', default: '30000'})
 
     return {
       selector,

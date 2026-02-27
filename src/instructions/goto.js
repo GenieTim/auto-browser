@@ -1,7 +1,5 @@
-
-import { ux } from '@oclif/core'
-
-const cli = ux;
+import {input} from '@inquirer/prompts'
+import replaceVariables from '../utils/replaceVariables.js'
 
 /**
  * The goto/open/... URL in browser
@@ -15,14 +13,15 @@ class GotoInstruction {
    * @param {object} _ an object to populate/read from to exchange data between instructions
    */
   async follow(instruction, driver, _) {
-    await driver.goto(instruction)
+    const target = replaceVariables(instruction)
+    await driver.goto(target)
   }
 
   /**
    * Create this instruction by requesting data from the user via CI
    */
   async createInteractively() {
-    return cli.prompt('Where would you like to go?')
+    return input({message: 'Where would you like to go?'})
   }
 }
 

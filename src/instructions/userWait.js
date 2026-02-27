@@ -1,9 +1,5 @@
-import {select} from '@inquirer/prompts'
+import {select, confirm} from '@inquirer/prompts'
 import sandman from '../utils/sandman.js'
-
-import {ux} from '@oclif/core'
-
-const cli = ux
 /**
  * Wait for user to do something
  */
@@ -31,7 +27,7 @@ class UserWaitInstruction {
         timeout: 600_000, // 10 min
       })
     } else if (instruction.end === 'CI-Enter') {
-      await cli.confirm('User input finished?')
+      await confirm({message: 'User input finished?'})
     } else {
       this.logger.warn('Unrecognized user input waiter. Waiting a generic minute...')
       await sandman.sleep(60_000)
