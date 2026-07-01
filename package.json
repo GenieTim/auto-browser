@@ -9,19 +9,19 @@
   "bugs": "https://github.com/GenieTim/auto-browser/issues",
   "dependencies": {
     "@inquirer/prompts": "^8.5.2",
-    "@oclif/core": "^4.11.6",
-    "@oclif/plugin-help": "^6.2.50",
-    "@oclif/plugin-version": "^2.2.47",
+    "@oclif/core": "^4.11.11",
+    "@oclif/plugin-help": "^6.2.53",
+    "@oclif/plugin-version": "^2.2.50",
     "glob": "^13.0.6",
-    "puppeteer": "^25.1.0"
+    "puppeteer": "^25.3.0"
   },
   "devDependencies": {
     "@oclif/prettier-config": "^0.2.1",
-    "eslint": "^10.5.0",
-    "eslint-config-oclif": "^6.0.171",
-    "eslint-plugin-unicorn": "^67.0.0",
+    "eslint": "^10.6.0",
+    "eslint-config-oclif": "^6.0.174",
+    "eslint-plugin-unicorn": "^70.0.0",
     "globby": "^16.2.0",
-    "prettier": "^3.8.4"
+    "prettier": "^3.9.4"
   },
   "engines": {
     "node": ">=12.0.0"
