@@ -10,15 +10,15 @@
   "dependencies": {
     "@inquirer/prompts": "^8.5.2",
     "@oclif/core": "^4.13.0",
-    "@oclif/plugin-help": "^6.2.53",
-    "@oclif/plugin-version": "^2.2.51",
+    "@oclif/plugin-help": "^6.2.54",
+    "@oclif/plugin-version": "^2.2.52",
     "glob": "^13.0.6",
     "puppeteer": "^25.3.0"
   },
   "devDependencies": {
     "@oclif/prettier-config": "^0.2.1",
     "eslint": "^10.8.0",
-    "eslint-config-oclif": "^6.0.177",
+    "eslint-config-oclif": "^6.0.179",
     "eslint-plugin-unicorn": "^72.0.0",
     "globby": "^16.2.2",
     "prettier": "^3.9.6"

@@ -420,17 +420,17 @@
     wordwrap "^1.0.0"
     wrap-ansi "^7.0.0"
 
-"@oclif/plugin-help@^6.2.53":
-  version "6.2.53"
-  resolved "https://registry.yarnpkg.com/@oclif/plugin-help/-/plugin-help-6.2.53.tgz#41798c3c4bcf363558bdf528514e40cac78c406c"
-  integrity sha512-njx2nTH87EQEEuz4ShNtL0gzzN981MRkDPqScbu+Tkd7NpIv30OHdTjQK1GzGtkf+V2RvSYIrX+LrLsUVh9DJw==
+"@oclif/plugin-help@^6.2.54":
+  version "6.2.54"
+  resolved "https://registry.yarnpkg.com/@oclif/plugin-help/-/plugin-help-6.2.54.tgz#cdc3792d24217b753a794f0b8e0ccf5f8015d165"
+  integrity sha512-a5ClL7HfZU8IbvDXc9HF7ciC0w5FbET7tiogQi8RrrvGCO3wLflC4JNg+JWC1IRJpBuSzR6aqZPsWYwfmqnEFw==
   dependencies:
     "@oclif/core" "^4"
 
-"@oclif/plugin-version@^2.2.51":
-  version "2.2.51"
-  resolved "https://registry.yarnpkg.com/@oclif/plugin-version/-/plugin-version-2.2.51.tgz#cfdc4205ca67e77ce01403c8137a4cb7b0ac7836"
-  integrity sha512-k+Ns/SCD2NbZgyDaYZqevJw37psXFgIzbY7YpKyigBR8y/yoTLuwlH2Mt2RBg9Scfohuced2TaeuIzg8NqtYZg==
+"@oclif/plugin-version@^2.2.52":
+  version "2.2.52"
+  resolved "https://registry.yarnpkg.com/@oclif/plugin-version/-/plugin-version-2.2.52.tgz#2c6052630857ea62e38800ca519559f3dc3e8748"
+  integrity sha512-JBv0sKcdOQg9Ey77JeKZkXUe7xFBaA8g+ygBW+iiLtNmRM3NzE0aLKz4xphE73bNQSKGLNxdJTuz/5WSXenFSA==
   dependencies:
     "@oclif/core" "^4"
     ansis "^3.17.0"
@@ -1347,10 +1347,10 @@ eslint-compat-utils@^0.5.1:
   dependencies:
     semver "^7.5.4"
 
-eslint-config-oclif@^6.0.177:
-  version "6.0.177"
-  resolved "https://registry.yarnpkg.com/eslint-config-oclif/-/eslint-config-oclif-6.0.177.tgz#8fe2be594a2a3b41793e28b9c4e6d59a100980bc"
-  integrity sha512-DjeVJCF7Z/aiEwGUyqCaO0DZp9HrZJPdDts2KW2kELPsHihBpVMRgzl7rVj8ao0S4if9qpLoIZ5g18wUNNIjAg==
+eslint-config-oclif@^6.0.179:
+  version "6.0.179"
+  resolved "https://registry.yarnpkg.com/eslint-config-oclif/-/eslint-config-oclif-6.0.179.tgz#4f605fa22a870b09c39261fc420fb67ebbff1a90"
+  integrity sha512-V0FZS3LpawI3slJIL0/Z1Qhs11ufhcVeQs4t1y8MDSw43UWAXGiRxByMO4xNLCdAwTDrC6dY4MsX7XEKiw6euA==
   dependencies:
     "@eslint/compat" "^1.4.1"
     "@eslint/eslintrc" "^3.3.5"
@@ -1367,7 +1367,7 @@ eslint-config-oclif@^6.0.177:
     eslint-plugin-n "^17.24.0"
     eslint-plugin-perfectionist "^4"
     eslint-plugin-unicorn "^56.0.1"
-    typescript-eslint "^8.64.0"
+    typescript-eslint "^8.65.0"
 
 eslint-config-xo-space@^0.35.0:
   version "0.35.0"
@@ -1828,7 +1828,7 @@ get-caller-file@^2.0.5:
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-2.0.5.tgz#4f94412a82db32f36e3b0b9741f8a97feb031f7e"
   integrity sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==
 
-get-east-asian-width@^1.0.0:
+get-east-asian-width@^1.0.0, get-east-asian-width@^1.5.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/get-east-asian-width/-/get-east-asian-width-1.6.0.tgz#216900f91df11a8b2c198c3e1d93d6c035a776b9"
   integrity sha512-QRbvDIbx6YklUe6RxeTeleMR0yv3cYH6PsPZHcnVn7xv7zO1BHN8r0XETu8n6Ye3Q+ahtSarc3WgtNWmehIBfA==
@@ -3146,6 +3146,14 @@ string-width@^7.0.0, string-width@^7.2.0:
     get-east-asian-width "^1.0.0"
     strip-ansi "^7.1.0"
 
+string-width@^8.2.1:
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-8.2.2.tgz#7310516493df575742fe98af6fae87d85d5ed0ac"
+  integrity sha512-GaPUh5gfdrYzqeVNZvUfT23vYYxXzKYidUcnMtJg/3rxRV63EFZy3k6xfKlmfeJD0176lnUV/Usr3XcwSvFzpg==
+  dependencies:
+    get-east-asian-width "^1.5.0"
+    strip-ansi "^7.1.2"
+
 string.prototype.trim@^1.2.10:
   version "1.2.11"
   resolved "https://registry.yarnpkg.com/string.prototype.trim/-/string.prototype.trim-1.2.11.tgz#e6bd19cda3985d05a42dda31f3ddf4d35d3430e3"
@@ -3186,7 +3194,7 @@ strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   dependencies:
     ansi-regex "^5.0.1"
 
-strip-ansi@^7.1.0:
+strip-ansi@^7.1.0, strip-ansi@^7.1.2:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-7.2.0.tgz#d22a269522836a627af8d04b5c3fd2c7fa3e32e3"
   integrity sha512-yDPMNjp4WyfYBkHnjIRLfca1i6KMyGCtsVgoKe/z1+6vukgaENdgGBZt+ZmKPc4gavvEZ5OgHfHdrazhgNyG7w==
@@ -3372,7 +3380,7 @@ typed-query-selector@^2.12.2:
   resolved "https://registry.yarnpkg.com/typed-query-selector/-/typed-query-selector-2.12.2.tgz#65e2462ac6b0aecfae1bfac1a4f3027070dbabaa"
   integrity sha512-EOPFbyIub4ngnEdqi2yOcNeDLaX/0jcE1JoAXQDDMIthap7FoN795lc/SHfIq2d416VufXpM8z/lD+WRm2gfOQ==
 
-typescript-eslint@^8.64.0:
+typescript-eslint@^8.65.0:
   version "8.65.0"
   resolved "https://registry.yarnpkg.com/typescript-eslint/-/typescript-eslint-8.65.0.tgz#754c953fd6a9a3d36fa54015bdba80a6eb2a4957"
   integrity sha512-/ggrHAwyjENDusvyxbuqxAC2dTnZg/Z8F+fgQtYIz+L6n/9HfSlEZcFGV/NsMNa6CkGk0xUjUAFwC0vHOflvIA==
@@ -3576,14 +3584,14 @@ yargs-parser@^22.0.0:
   integrity sha512-rwu/ClNdSMpkSrUb+d6BRsSkLUq1fmfsY6TOpYzTwvwkg1/NRG85KBy3kq++A8LKQwX6lsu+aWad+2khvuXrqw==
 
 yargs@^18.0.0:
-  version "18.0.0"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-18.0.0.tgz#6c84259806273a746b09f579087b68a3c2d25bd1"
-  integrity sha512-4UEqdc2RYGHZc7Doyqkrqiln3p9X2DZVxaGbwhn2pi7MrRagKaOcIKe8L3OxYcbhXLgLFUS3zAYuQjKBQgmuNg==
+  version "18.1.0"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-18.1.0.tgz#cd7e98c703ef51695bbbf062ed58f28e94291b56"
+  integrity sha512-2rAgRKu54VsHkqI0/tYkmluGXHD4KW7yZoycuqDQ15QOTnc2VVfy0nN/1eMhnQLO00A+dwtK20xuCnc1YGeUyg==
   dependencies:
     cliui "^9.0.1"
     escalade "^3.1.1"
     get-caller-file "^2.0.5"
-    string-width "^7.2.0"
+    string-width "^8.2.1"
     y18n "^5.0.5"
     yargs-parser "^22.0.0"
 
